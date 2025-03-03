@@ -1,0 +1,34 @@
+{% extends "global/Page.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <h1>游戏 2：游戏介绍</h1>
+    
+    <div style="display: flex; align-items: center;">
+        <!-- text -->
+        <div style="flex: 4; padding-right: 30px;">
+        <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>{{ C.INITIAL_AMOUNT }}</strong>  元启动资金，游戏共进行 <strong>{{ C.NUM_ROUNDS }}</strong> 局，你在游戏 2 中的收益为 {{ C.NUM_ROUNDS }} 局游戏的累积收益。
+        </p>
+
+        <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。<span style="color: red;">在一局游戏中，你和对方看到的信息（从同一个箱中抽出的球）是完全相同的</span>。在整个游戏过程中你们<span style="color: red;">看不到彼此的选择</span>。
+        </p>
+
+        {{ C.NUM_ROUNDS }} 局游戏结束后，系统将比对双方每局的选择，按以下规则计算各自<b>每局的收益</b>：
+        <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
+        <li>情况 1：两位玩家<strong>在同一轮次</strong>做出判断，<b>彼此收益互不影响</b>，判断正确者得 1 元，判断错误者失 1 元。</li>
+        <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
+        </div>
+
+        </div>
+    
+        <!-- img -->
+        <div style="flex: 1; text-align: center;">
+            <img src="{{static 'img/concept3.png'}}" height="350px" style="display: block; margin: 0 auto;" />
+        </div>
+    </div>
+    
+    <button type="submit" class="otree-btn-next btn btn-primary">
+        下一页
+     </button>
+{% endblock %}

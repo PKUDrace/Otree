@@ -1,0 +1,37 @@
+{% extends "global/Page.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<h1>游戏 1：游戏介绍</h1>
+    <br>    
+    <div style="display: flex; align-items: center;">
+        <!-- text -->
+        <div style="flex: 4; padding-right: 30px;">
+            
+            <p>本游戏你拥有 <strong>{{ C.INITIAL_AMOUNT }}</strong> 元启动资金，游戏共进行 <strong>{{ C.NUM_ROUNDS }}</strong> 局，你在游戏 1 中的收益为 {{ C.NUM_ROUNDS }} 局游戏的累积收益。<b>每局游戏具体规则如下：</b></p>
+
+            <p>
+                (1) 每局开始时，系统随机挑选⼀个箱子，按右图规律从箱中抽球 (后续页面也会展示该规律)。
+            </p>
+            <p>
+                (2) 每局最多进行 <b>{{ C.MAX_ATTEMPTS }}</b> 轮。每轮中，你会看到当前和之前轮次中抽出的所有球，并在三个选项中择一选择：<b>A</b>. 这是偏白箱；<b>B</b>. 这是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
+            </p> 
+            <p>
+                (3) 一旦你在某一轮次中做出判断——选择 A 或 B，则本局游戏立刻结束；若选择 C，则进入下一轮。第 {{ C.MAX_ATTEMPTS }} 轮时必须做判断，在 A 和 B 之间择一选择。
+            </p>
+            <p> 
+                (4) 每局结束后，如果<span style="color: red;">判断正确</span>，将<span style="color: red;">获得 1 元</span>；如果<span style="color: red;">判断错误</span>，将<span style="color: red;">失去 1 元</span>。你的收益只取决于判断是否正确，而与做出判断的轮次无关。
+            </p> 
+        </div>
+
+        <!-- img -->
+        <div style="flex: 1; text-align: center;">
+            <img src="{{static 'img/concept3.png'}}" height="350px" style="display: block; margin: 0 auto;" />
+        </div>
+    </div>
+
+    <button type="submit" class="otree-btn-next btn btn-primary">
+        开始游戏
+    </button>
+{% endblock %}

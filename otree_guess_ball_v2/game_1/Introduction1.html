@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <h1>游戏 1：游戏总则</h1>
+    <br>
+    <p>本游戏有<b>两个</b>箱子：“<b>偏白箱</b>”和“<b>偏黑箱</b>”。偏白箱中抽出白球的概率更高，偏黑箱中抽出黑球的概率更高。具体概率如下图：
+    </p>
+    <img src = "{{static 'img/concept.png'}}" width="750px" style="display: block; margin: 0 auto;"/>
+    <p><b>每局游戏</b>开始时，系统从两个箱子中<b>随机</b>挑选一个。<b>每局最多进行 {{ C.MAX_ATTEMPTS }} 轮游戏</b>。每一轮，系统从本局初被挑中的箱子里抽取一个球，抽球不需要成本。
+    </p>
+    <p>每局游戏里，你需要根据当前及之前轮次抽出的所有球<b>推测</b>本局被挑中的<b>是哪个箱子</b>。</p>
+    <button type="submit" class="otree-btn-next btn btn-primary">
+        下一页
+     </button>
+{% endblock %}

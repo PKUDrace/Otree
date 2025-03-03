@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% block content %}
+
+    <p><b>请基于游戏 2 的收益计算规则，完成下面两道计算题。</b></p>
+    <p>1. 在游戏 2 某一局中，玩家 1 在<b>第 9 轮</b>作答，选择了<b>“A. 这是偏白箱”</b>，玩家 2 也在<b>第 9 轮</b>作答，选择了<b>“B. 这是偏黑箱”</b>。如果在这局游戏开始时，被挑中的宝箱是<b>偏白箱</b>，请选择两位玩家在该局游戏中的收益。</p>
+    {{ formfield "answer1" }}
+    {{ formfield "answer2" }}
+    <br>
+    
+    <p>2. 在游戏 2 某一局中，玩家 1 在<b>第 1 轮</b>作答，选择了<b>“A. 这是偏白箱”</b>，玩家 2 在<b>第 9 轮</b>作答，选择了<b>“A. 这是偏白箱”</b>。如果在这局游戏开始时，被挑中的宝箱是<b>偏白箱</b>，请选择两位玩家在该局游戏中的收益。</p>
+    {{ formfield "answer3" }}
+    {{ formfield "answer4" }}
+    <br>
+    
+    <button type="submit" class="btn btn-primary">提交</button>
+    
+{% endblock %}

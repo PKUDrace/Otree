@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    {% if round_number < C.NUM_ROUNDS %}
+    <h2>游戏 3：进行中</h2>
+    {% else %} <h2>游戏 3 结束</h2>
+    {% endif %}
+    <br>
+    <p>第 {{ round_number }} 局游戏结果：</p>
+    <p>你在第 {{ open_number }} 轮做出判断: {{ guess }}。</p>
+    <p>你的判断  <strong>{{ outcome }}</strong>，本局收益 <strong>{{ earnings }}</strong> 元。</p>
+    <br>
+    
+    {% if round_number < C.NUM_ROUNDS %}
+    <p>你在游戏 3 中的累积收益是：<strong>{{ total_earnings }} 元</strong>。</p>
+    <br>
+    <button type="submit" class="otree-btn-next btn btn-primary">下一局</button>
+    {% endif %}
+
+    {% if round_number == C.NUM_ROUNDS %}
+    <p><strong>你在游戏 3 中的最终收益是：{{ total_earnings }} 元</strong>。</p>
+    <br>
+    <button type="submit" class="otree-btn-next btn btn-primary">下一页</button>
+    {% endif %}
+{% endblock %}

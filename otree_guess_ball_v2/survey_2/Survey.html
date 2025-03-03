@@ -1,0 +1,72 @@
+{% extends "global/Page.html" %}
+{% block content %}
+<style>
+    table,
+    table td th,
+    table {
+       border-collapse: collapse;
+       width: 80%;
+       margin: 0 auto;
+    }
+    th {
+        border-bottom: 1px solid black;
+        border-top: 1px solid black; 
+        padding: 5px; 
+        text-align: center;
+    }
+    td {
+        border-bottom: 1px solid black;
+        padding: 5px; 
+        text-align: center;
+    } 
+</style>
+
+    <h3>问卷2</h3>
+     <p>有6枚硬币（如下表），每一枚硬币投掷出正反面的概率都是50%。每一枚硬币的正面、反面各有一个面值。你可以选择抛掷任何一枚硬币，并根据掷出的是正面还是反面获得相应的面值。</p>
+     <table>
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th>硬币</th>
+                <th>正面</th>
+                <th>反面</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>硬币1</td>
+                <td>28元</td>
+                <td>28元</td>
+            </tr>
+            <tr>
+                <td>硬币2</td>
+                <td>36元</td>
+                <td>24元</td>
+            </tr>
+            <tr>
+                <td>硬币3</td>
+                <td>44元</td>
+                <td>20元</td>
+            </tr>
+            <tr>
+                <td>硬币4</td>
+                <td>52元</td>
+                <td>16元</td>
+            </tr>
+            <tr>
+                <td>硬币5</td>
+                <td>60元</td>
+                <td>12元</td>
+            </tr>
+            <tr>
+                <td>硬币6</td>
+                <td>70元</td>
+                <td>2元</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div>
+        {{ formfield form.chosen_scenario }}
+    </div>
+    <button type="submit" class="btn btn-primary">提交</button>
+{% endblock %}

@@ -1,0 +1,80 @@
+
+{% block content %}
+<style>
+    .otree-form-errors {
+        display: none;
+    }
+    ul {
+        padding-left: 0;
+        list-style-type: none;
+    }
+
+    /* 调整 radio 按钮的大小 */
+    .radio-option input[type="radio"] {
+        transform: scale(1.2); /* 1.4 倍大小 */
+        margin-right: 3px; /* 按钮和文字间的间距 */
+    }
+</style>
+
+
+    <h3>问卷3</h3>
+    <p><b>请完成下面 8 组问题。</b></p>
+
+    {% if form.choice1.errors %}
+        <div class="alert alert-danger">
+            请完成第一道题
+        </div>
+    {% endif %}
+    
+    
+    <div class="radio-option">
+        <label>1. 以下两个选项中你更偏好哪一项？</label>
+        <ul>
+            <label><input type="radio" name="choice1" value="A"> 你有<b>63%</b>的概率获得100元，有<b>37%</b>的概率获得0元。</label>
+            <label><input type="radio" name="choice1" value="B"> 如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>低于</b>300点，你将获得100元；否则获得0元。</label>
+        </ul>
+    </div>
+
+    {% if form.choice2.errors %}
+    <div class="alert alert-danger">
+        请完成第二道题
+    </div>
+    {% endif %}
+
+    <div class="radio-option">
+        <label>2. 以下两个选项中你更偏好哪一项？</label>
+        <ul>
+            <label><input type="radio" name="choice2" value="A"> 你有<b>50%</b>的概率获得100元，有<b>50%</b>的概率获得0元。</label>
+            <label><input type="radio" name="choice2" value="B"> 如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>低于</b>300点，你将获得100元；否则获得0元。</label>
+        </ul>
+    </div>
+
+    {% if form.choice3.errors %}
+    <div class="alert alert-danger">
+        请完成第三道题
+    </div>
+    {% endif %}
+
+    <div class="radio-option">
+        <label>3. 以下两个选项中你更偏好哪一项？</label>
+        <ul>
+            <label><input type="radio" name="choice3" value="A"> 你有<b>25%</b>的概率获得100元，有<b>75%</b>的概率获得0元。</label>
+            <label><input type="radio" name="choice3" value="B"> 如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>低于</b>300点，你将获得100元；否则获得0元。</label>
+    </div>
+
+    {% if form.choice4.errors %}
+    <div class="alert alert-danger">
+        请完成第四道题
+    </div>
+    {% endif %}
+
+    <div class="radio-option">
+        <label>4. 以下两个选项中你更偏好哪一项？</label>
+        <ul>
+            <label><input type="radio" name="choice4" value="A"> 你有<b>10%</b>的概率获得100元，有<b>90%</b>的概率获得0元。</label>
+            <label><input type="radio" name="choice4" value="B"> 如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>低于</b>300点，你将获得100元；否则获得0元。</label>
+        </ul>
+    </div>
+
+    <button type="submit" class="btn btn-primary">下一页</button>
+{% endblock %}

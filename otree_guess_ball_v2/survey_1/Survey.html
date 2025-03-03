@@ -1,0 +1,66 @@
+
+{% load otree %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <h3>问卷1</h3>
+
+    <form method="post">
+
+        <div>
+            {{ formfield "gender" }}
+        </div>
+
+        <div>
+            {{ formfield "age" }}
+        </div>
+
+        <div>
+            {{ formfield "phone_number" }}
+        </div>
+        
+        <div>
+            {{ formfield "is_student" }}
+        </div>
+    
+        <div id="student-fields" style="display:none;">
+            <div>
+                {{ formfield "student_id" }}
+            </div>
+            
+            <div>
+                {{ formfield "grade" }}
+            </div>
+    
+            <div>
+                {{ formfield "discipline" }}
+            </div>
+    
+            <div>
+                {{ formfield "major" }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+    
+    <script>
+        // Function to toggle visibility of student fields based on the is_student field value
+        function toggleStudentFields() {
+            var isStudent = document.querySelector('input[name="is_student"]:checked').value;
+            document.getElementById('student-fields').style.display = isStudent === 'True' ? 'block' : 'none';
+        }
+    
+        // Initial check on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleStudentFields();
+        });
+    
+        // Add event listeners to update field visibility when selection changes
+        document.querySelectorAll('input[name="is_student"]').forEach(function(radio) {
+            radio.addEventListener('change', toggleStudentFields);
+        });
+    </script>
+    
+{% endblock %}

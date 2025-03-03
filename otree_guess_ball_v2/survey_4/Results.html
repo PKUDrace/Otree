@@ -1,0 +1,20 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+{% block title %}实验结果{% endblock %}
+{% block content %}
+    <br>
+    <p>你在游戏 1 、游戏 2 和游戏 3 中的最终收益分别为 {{ game1_earnings }} 元、{{ game2_earnings }} 元和 {{ game3_earnings }} 元。</p>
+    <p><strong>你的实验报酬为 {{ game1_earnings }} + {{ game2_earnings }} + {{ game3_earnings }} + 10 = {{ total_payment }} 元。</strong></p>
+    <br>
+    <form method="post">
+        <div>
+            {{ formfield form.payment_choice }}
+        </div>
+        <br>
+        <div>
+            {{ formfield form.feedback }}
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+{% endblock %}

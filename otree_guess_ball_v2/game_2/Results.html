@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    {% if round_number < C.NUM_ROUNDS %}
+    <h2>游戏 2：进行中</h2>
+    {% else %} <h2>游戏 2 结束</h2>
+    {% endif %}
+    <br>
+    <p>第 {{ round_number }} 局游戏结果：</p>
+    <p>你在第 {{ open_number }} 轮做出判断: {{ guess }}。
+        与你匹配的玩家也在某一轮次做出判断。
+    </p>
+    
+    {% if round_number < C.NUM_ROUNDS %}
+    <p>游戏 2 结束后，系统将比对双方的选择计算你们在游戏 2 中的收益。</p>
+    <br>
+    <button type="submit" class="otree-btn-next btn btn-primary">下一局</button>
+    {% endif %}
+
+    {% if round_number == C.NUM_ROUNDS %}
+    <p>你在游戏 2 中的收益将在实验结束后公布。</p>
+    <br>
+    <button type="submit" class="otree-btn-next btn btn-primary">进入游戏 3 </button>
+    {% endif %}
+
+    
+{% endblock %}

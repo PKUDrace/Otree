@@ -1,0 +1,37 @@
+{% extends "global/Page.html" %}
+{% block title %}{% endblock %}
+
+{% block content %}
+    <h1>游戏 3：游戏介绍</h1>
+    <div style="display: flex; align-items: center;">
+        <!-- text -->
+        <div style="flex: 4; padding-right: 20px;">
+        <br>
+    <p>
+        你将和<b>另一位随机匹配</b>的玩家按照游戏 2 进行抢答竞猜。本游戏你拥有 <strong>{{ C.INITIAL_AMOUNT }}</strong>  元启动资金，游戏共进行 <strong>{{ C.NUM_ROUNDS }}</strong> 局，你在游戏 3 中的收益为 {{ C.NUM_ROUNDS }} 局游戏的累积收益。
+    </p>
+    <p>
+        箱子的选取方法、抽球规律和作答规则与游戏 2 相同。
+        <b>每局游戏结束后</b>，按照游戏 2 的规则计算收益并<span style="color: red;">反馈结果</span>。
+    </p>
+
+    <p>
+        <span style="color: red;">在后续对局中，倒序展示往期所有对局里双方的作答轮次与收益。</span> 
+        <br>
+        <b>示例</b>（如右图，第 5 局时可以看到往期四局的结果）：<br>
+        <b>第 4 局</b>：我和对方都在第 1 轮做出判断，均判断错误，各损失 1 元。<br>
+        <b>第 3 局</b>：我在第 1 轮做出判断，判断错误失 1 元；对方作答轮次晚于我，本局收益为 0。<br>    
+        <b>第 2 局</b>：我在第 9 轮做出判断，因作答轮次晚于对方，本局收益为 0；对方在第 1 轮判断正确得 1 元。<br>
+        <b>第 1 局</b>：我和对方都在第 9 轮做出判断。我判断错误失 1 元；对方判断正确得 1 元。<br>
+    </p>
+</div>
+    
+<!-- img -->
+<div style="flex: 1; text-align: center;">
+    <img src="{{static 'img/history.png'}}" height="400px" style="display: block; margin: 0 auto;" />
+</div>
+</div>
+    <button type="submit" class="otree-btn-next btn btn-primary"> 
+        开始游戏
+     </button>
+{% endblock %}

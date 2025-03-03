@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% block content %}
+    <h2>答案反馈</h2>
+    <br>
+    <p>
+        第 1 题回答<b> {{ feedback1 }}</b>。<br>
+        计算思路：这一局中两位玩家在同一轮次（第 9 轮）作答，彼此收益互不影响；双方都选择了“A. 这是偏白箱”，均判断正确得 1 元。
+    </p>
+
+    <p>
+        第 2 题回答<b> {{ feedback2}}</b>。<br>
+        计算思路：这一局中玩家 2 的作答轮次（第 9 轮）晚于玩家 1（第 1 轮），因此所做判断无效得 0 元；而玩家 1 判断错误损失 1 元。
+    </p>
+
+    <br>
+    游戏 2 <b>每局收益</b>的计算规则如下：
+    <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
+    <li>情况 1：两位玩家<strong>在同一轮次</strong>做出判断，<b>彼此收益互不影响</b>，判断正确者得 1 元，判断错误者失 1 元。</li>
+    <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
+    </div>
+
+    <br>
+    <button type="submit" class="btn btn-primary">开始游戏</button>
+{% endblock %}
