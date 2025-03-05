@@ -339,8 +339,7 @@ survey1_timeline.push({
         };
 
         console.log('responseData on_finish:', responseData); // 输出调试信息
-
-        // 保存数据
+        jsPsych.data.addProperties(responseData);
         jsPsych.finishTrial();
     }
 });

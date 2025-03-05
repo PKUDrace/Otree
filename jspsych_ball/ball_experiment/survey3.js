@@ -154,7 +154,7 @@ survey3_timeline.push({
                 choice7: formData.get('choice7'),
                 choice8: formData.get('choice8')
             };
-            console.log('ResponseData:', responseData); // 输出调试信息
+            
             jsPsych.data.addProperties(responseData);
             jsPsych.finishTrial();
         });

@@ -85,7 +85,7 @@ survey2_timeline.push({
                 alert('请选择一枚硬币');
                 return;
             }
-            // jsPsych.data.addProperties({ chosen_scenario: chosenScenario });
+            jsPsych.data.addProperties({ chosen_scenario: chosenScenario });
             jsPsych.finishTrial();
         });
     }

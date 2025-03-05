@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>竞争性假设检验实验</title>
+    <title>test</title>
 
     <script src="https://www.naodao.com/public/experiment/libs/jspsych-7/jspsych.js"></script>
     <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-html-keyboard-response.js"></script>
@@ -25,41 +25,53 @@
   </head>
 
   <body></body>
-
+  <script src="survey3.js"></script>
   <script>
-    const jsPsych = initJsPsych({
-        on_finish: function () {
-            jsPsych.data.get().localSave("csv", "stroop_data.csv");
-  }
-});
-let intro_text = `
-    <h3>欢迎参加实验！</h3>
-    <br>
-    <div class="centered-list">
-        <ul>
-            <li>本实验由三个调查问卷和<strong>两个决策游戏</strong>组成。你的报酬与你在三个游戏中的表现有关。</li>
-            <li>请务必使用<b>电脑</b>参与实验！若现在使用了其他设备，请退出，改用电脑重新登录本实验。</li>
-            <li>参与实验是完全自愿的，你可以在任何时候选择退出实验，但如果退出实验你将不会获得任何报酬。</li>
-            <li>所有参与者匿名参加本实验，你的真实身份被严格保密。</li>
-            <li>在整个实验过程中你不会受到任何欺骗或误导，实验进行的方式与其描述的完全一致。</li>
-        </ul>
-    </div>
-    <br>
-    <p>按空格键开始实验</p>
-    `; 
-    let intro = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: intro_text,
-        choices: [' '],
-        data: {
-            plugin: 'intro'
-        }
-    };
+  const jsPsych = initJsPsych({
+    on_finish: function() {
+        // 自定义保存方法
+        const data = jsPsych.data.get().csv();
+        const bom = new Uint8Array([0xEF, 0xBB, 0xBF]); // UTF-8 BOM头
+        const blob = new Blob([bom, data], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'experiment_data.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+  });
+    // 定义时间线
+    let timeline = [];
 
-    let timeline = [intro];
+    // 引入各部分的时间线
 
-jsPsych.run(timeline);
+    timeline = timeline.concat(survey3_timeline);
+    
+    timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p>实验结束，谢谢您的参与！</p><p>点击下面的按钮下载数据。</p><button id="download-data" class="jspsych-btn">下载数据</button>',
+    choices: "NO_KEYS",
+    on_load: function() {
+        document.getElementById('download-data').addEventListener('click', function() {
+            const data = jsPsych.data.get().csv();
+            const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            const blob = new Blob([bom, data], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'experiment_data.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+      }
+    });
+    
+
+
+    // 运行实验
+    jsPsych.run(timeline);
   </script>
-  
-
 </html>

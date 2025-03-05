@@ -4,130 +4,74 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Stroop 示例</title>
+    <title>test</title>
 
     <script src="https://www.naodao.com/public/experiment/libs/jspsych-7/jspsych.js"></script>
     <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-html-keyboard-response.js"></script>
     <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-categorize-html.js"></script>
 
     <link rel="stylesheet" href="https://www.naodao.com/public/experiment/libs/jspsych-7/css/jspsych.css">
+    <style>
+        /* 自定义样式 */
+        .centered-list {
+            display: flex;
+            justify-content: center;
+        }
+
+        .centered-list ul {
+            text-align: left;
+        }
+    </style>
   </head>
 
   <body></body>
-
+  <script src="survey3.js"></script>
   <script>
-    const jsPsych = initJsPsych({
-        on_finish: function () {
-            jsPsych.data.get().localSave("csv", "stroop_data.csv");
-  }
-});
-    let instr_text = `
-    <div style="text-align: left;">
-    <h3>欢迎参与 Stroop 测试</h3>
-    <p>测试中，屏幕上会依次呈现一系列词语刺激，每个词语刺激的字体颜色随机以红色或绿色　
-        中的一种呈现。</p>
-    <p>当词语呈现时，请忽略词语的意思，并判断词语所用的颜色，又快又准确地作出相应的按键反应。</p>
-    <ul>
-        <li>当出现<span style="color: red">红色</span>颜色的词语时，请按 “R” 键；</li>
-        <li>当出现<span style="color: green">绿色</span>颜色的词语时，请按 “G” 键；</li>
-    </ul>
-    <p>请按空格键进入实验</p>
-    </div>
-    `;
-    let instruction = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: instr_text,
-        response_ends_trial: true,
-        choices: " ",
-        data: {
-            plugin_name: "instruction"
-        }
-    };
-
-    let end = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: "你已完成测试，按下空格或 5 秒后自动退出",
-        trial_duration: 5000,
-        response_ends_trial: true,
-        choices: " ",
-        data: {
-            plugin_name: "end"
-        }
-    };
-    let main_timeline = [];
-
-    let trial_block = {
-        timeline: [],
-    };
-    let conditions = [
-        {
-            "text": "红",
-            "color": "red",
-            "correct": "r",
-            "stim_type": "相容"
-        },
-        {
-            "text": "红",
-            "color": "green",
-            "correct": "g",
-            "stim_type": "不相容"
-        },
-        {
-            "text": "绿",
-            "color": "green",
-            "correct": "g",
-            "stim_type": "相容"
-        },
-        {
-            "text": "绿",
-            "color": "red",
-            "correct": "r",
-            "stim_type": "不相容"
-        }
-    ];
-    trial_block = {
-        timeline: [],
-        imeline_variables: conditions,
-        repetitions: 1,
-        randomize_order: false
-    };
-    let fixation = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: "<p style='font-size: 48pt;'>+</p>",
-        trial_duration: 500,
-        choices: "NO-KEYS",
-        data: {
-            plugin_name: "fixation"
-        }
-    };
-    function set_stim() {
-        let text = jsPsych.timelineVariable("text");
-        let color = jsPsych.timelineVariable("color");
-        let stim = `<p style="color: ${color}; font-size: 48pt;">${text}</p>`;
-        return stim;
+  const jsPsych = initJsPsych({
+    on_finish: function() {
+        // 自定义保存方法
+        const data = jsPsych.data.get().csv();
+        const bom = new Uint8Array([0xEF, 0xBB, 0xBF]); // UTF-8 BOM头
+        const blob = new Blob([bom, data], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'experiment_data.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
-    let trial = {
-        type: jsPsychCategorizeHtml,
-        stimulus: set_stim,
-        choices: ["r", "g"],
-        key_answer: jsPsych.timelineVariable("correct"),
-        feedback_duration: 500,
-        show_stim_with_feedback: false,
-        correct_text: "正确",
-        incorrect_text: "错误",
-        data: {
-            plugin_name: "trial",
-            stim_type: jsPsych.timelineVariable("stim_type")
-        }
-    };
-    trial_block.timeline = [
-        fixation, trial
-    ];
-    main_timeline = [
-        instruction, trial_block, end
-    ];
-    jsPsych.run(main_timeline);
-  </script>
-  
+  });
+    // 定义时间线
+    let timeline = [];
 
+    // 引入各部分的时间线
+
+    timeline = timeline.concat(survey3_timeline);
+    
+    timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p>实验结束，谢谢您的参与！</p><p>点击下面的按钮下载数据。</p><button id="download-data" class="jspsych-btn">下载数据</button>',
+    choices: "NO_KEYS",
+    on_load: function() {
+        document.getElementById('download-data').addEventListener('click', function() {
+            const data = jsPsych.data.get().csv();
+            const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            const blob = new Blob([bom, data], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'experiment_data.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+      }
+    });
+    
+
+
+    // 运行实验
+    jsPsych.run(timeline);
+  </script>
 </html>
