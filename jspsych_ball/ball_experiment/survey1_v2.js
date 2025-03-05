@@ -19,9 +19,72 @@ const surveyHTML = `
             <input type="number" name="age" min="12" max="99" required style="width: 50%; padding: 0.5rem;">
             
         </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+        <label style="display: block; margin-bottom: 0.5rem;">3. 你的民族</label>
+        <select name="ethnicity" required style="width: 100%; padding: 0.5rem;">
+            <option value="">请选择</option>
+            <option value="汉族">汉族</option>
+            <option value="蒙古族">蒙古族</option>
+            <option value="回族">回族</option>
+            <option value="藏族">藏族</option>
+            <option value="维吾尔族">维吾尔族</option>
+            <option value="苗族">苗族</option>
+            <option value="彝族">彝族</option>
+            <option value="壮族">壮族</option>
+            <option value="布依族">布依族</option>
+            <option value="朝鲜族">朝鲜族</option>
+            <option value="满族">满族</option>
+            <option value="侗族">侗族</option>
+            <option value="瑶族">瑶族</option>
+            <option value="白族">白族</option>
+            <option value="土家族">土家族</option>
+            <option value="哈尼族">哈尼族</option>
+            <option value="哈萨克族">哈萨克族</option>
+            <option value="傣族">傣族</option>
+            <option value="黎族">黎族</option>
+            <option value="傈僳族">傈僳族</option>
+            <option value="佤族">佤族</option>
+            <option value="畲族">畲族</option>
+            <option value="高山族">高山族</option>
+            <option value="拉祜族">拉祜族</option>
+            <option value="水族">水族</option>
+            <option value="东乡族">东乡族</option>
+            <option value="纳西族">纳西族</option>
+            <option value="景颇族">景颇族</option>
+            <option value="柯尔克孜族">柯尔克孜族</option>
+            <option value="土族">土族</option>
+            <option value="达斡尔族">达斡尔族</option>
+            <option value="仫佬族">仫佬族</option>
+            <option value="羌族">羌族</option>
+            <option value="布朗族">布朗族</option>
+            <option value="撒拉族">撒拉族</option>
+            <option value="毛南族">毛南族</option>
+            <option value="仡佬族">仡佬族</option>
+            <option value="锡伯族">锡伯族</option>
+            <option value="阿昌族">阿昌族</option>
+            <option value="普米族">普米族</option>
+            <option value="塔吉克族">塔吉克族</option>
+            <option value="怒族">怒族</option>
+            <option value="乌孜别克族">乌孜别克族</option>
+            <option value="俄罗斯族">俄罗斯族</option>
+            <option value="鄂温克族">鄂温克族</option>
+            <option value="德昂族">德昂族</option>
+            <option value="保安族">保安族</option>
+            <option value="裕固族">裕固族</option>
+            <option value="京族">京族</option>
+            <option value="塔塔尔族">塔塔尔族</option>
+            <option value="独龙族">独龙族</option>
+            <option value="鄂伦春族">鄂伦春族</option>
+            <option value="赫哲族">赫哲族</option>
+            <option value="门巴族">门巴族</option>
+            <option value="珞巴族">珞巴族</option>
+            <option value="基诺族">基诺族</option>
+    </select>
+</div>
         
         <div class="form-group" style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem;">3. 你现在是在读的本硕博学生吗？</label>
+            <label style="display: block; margin-bottom: 0.5rem;">4. 你现在是在读的本硕博学生吗？</label>
             <div>
                 <label><input type="radio" name="is_student" value="true" required> 是</label>
                 <label><input type="radio" name="is_student" value="false"> 否</label>
@@ -30,7 +93,7 @@ const surveyHTML = `
 
         <div id="student-fields" style="display:none;">
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">4. 你的年级是</label>
+                <label style="display: block; margin-bottom: 0.5rem;">5. 你的年级是</label>
                 <select name="grade" required class="form-control">
                     <option value="">请选择</option>
                     <option value="undergrad1">本科一年级</option>
@@ -43,7 +106,7 @@ const surveyHTML = `
             </div>
 
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">5. 请选择你的专业所属的学科类别</label>
+                <label style="display: block; margin-bottom: 0.5rem;">6. 请选择你的专业所属的学科类别</label>
                 <select name="discipline" required class="form-control">
                     <option value="">请选择</option>
                     <option value="culture">文科类</option>
@@ -59,7 +122,7 @@ const surveyHTML = `
             </div>
 
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">6. 请具体填写你的专业名称</label>
+                <label style="display: block; margin-bottom: 0.5rem;">7. 请具体填写你的专业名称</label>
                 <input type="text" name="major" required 
                 style="width: 91.5%; padding: 0.5rem;">
             </div>
@@ -67,7 +130,7 @@ const surveyHTML = `
 
         <div id="social_fields" style="display:none;">
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">4. 请选择你的最高学历</label>
+                <label style="display: block; margin-bottom: 0.5rem;">5. 请选择你的最高学历</label>
                 <select name="education_level" required class="form-control">
                     <option value="">请选择</option>
                     <option value="primary_school">小学及以下</option>
@@ -81,7 +144,7 @@ const surveyHTML = `
             </div>
 
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">5. 所处行业种类</label>
+                <label style="display: block; margin-bottom: 0.5rem;">6. 所处行业种类</label>
                 <select name="industry" required class="form-control">
                     <option value="">请选择</option>
                     <option value="agriculture">农、林、牧、渔业</option>
@@ -104,7 +167,7 @@ const surveyHTML = `
             </div>
 
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">6. 年平均月收入</label>
+                <label style="display: block; margin-bottom: 0.5rem;">7. 平均月收入</label>
                 <select name="income" required class="form-control">
                     <option value="">请选择</option>
                     <option value="3000_and_below">3000元及以下</option>
@@ -115,7 +178,7 @@ const surveyHTML = `
             </div>
 
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">7. 婚姻状况</label>
+                <label style="display: block; margin-bottom: 0.5rem;">8. 婚姻状况</label>
                 <select name="marital_status" required class="form-control">
                     <option value="">请选择</option>
                     <option value="single">未婚</option>
@@ -125,7 +188,7 @@ const surveyHTML = `
             </div>
 
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">8. 子女状况</label>
+                <label style="display: block; margin-bottom: 0.5rem;">9. 子女状况</label>
                 <select name="children_status" required class="form-control">
                     <option value="">请选择</option>
                     <option value="no_children">没有子女</option>
