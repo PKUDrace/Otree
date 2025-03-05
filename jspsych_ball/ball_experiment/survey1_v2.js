@@ -1,10 +1,10 @@
 const survey1_timeline = [];
 
-const surveyHTML = `
+const survey1HTML = `
 <div class="survey-container" style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: left;">
     <h3 style="text-align: center;">问卷1</h3>
     
-    <form id="survey-form">
+    <form id="survey1-form">
         <div class="form-group" style="margin-bottom: 1.5rem;">
             <label style="display: block; margin-bottom: 0.5rem;">1. 你的性别</label>
             <div>
@@ -199,7 +199,10 @@ const surveyHTML = `
             </div>
         </div>
         
-        <button type="submit" class="jspsych-btn" style="margin-top: 20px;">提交</button>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button type="submit" class="jspsych-btn" style="padding: 12px 24px; font-size: 16px;">提交</button>
+        </div>
+        <br>
     </form>
 </div>
 `;
@@ -225,7 +228,7 @@ document.head.appendChild(style);
 
 survey1_timeline.push({
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: surveyHTML,
+    stimulus: survey1HTML,
     choices: "NO_KEYS",
     trial_duration: null,
     
@@ -236,6 +239,7 @@ survey1_timeline.push({
         
         function toggleFields() {
             const isStudent = document.querySelector('input[name="is_student"]:checked')?.value;
+            console.log('isStudent:', isStudent); // 输出调试信息
             
             // 控制显示/隐藏
             studentFields.style.display = isStudent === 'true' ? 'block' : 'none';
@@ -283,6 +287,30 @@ survey1_timeline.push({
         studentRadios.forEach(radio => {
             radio.addEventListener('change', toggleFields);
         });
+
+        // 添加表单提交事件监听
+        const form = document.getElementById('survey1-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const responseData = {
+                gender: formData.get('gender'),
+                age: parseInt(formData.get('age')),
+                ethnicity: formData.get('ethnicity'),
+                is_student: formData.get('is_student') === 'true',
+                grade: formData.get('grade') || '',
+                discipline: formData.get('discipline') || '',
+                major: formData.get('major') || '',
+                education_level: formData.get('education_level') || '',
+                industry: formData.get('industry') || '',
+                income: formData.get('income') || '',
+                marital_status: formData.get('marital_status') || '',
+                children_status: formData.get('children_status') || ''
+            };
+
+            console.log('responseData:', responseData); // 输出调试信息
+            jsPsych.finishTrial();
+        });
     },
     
     on_finish: function(data) {
@@ -292,14 +320,14 @@ survey1_timeline.push({
             input.required = false;
         });
 
-        const formData = new FormData(document.getElementById('survey-form'));
+        const formData = new FormData(document.getElementById('survey1-form'));
 
         // 收集数据
         const responseData = {
             gender: formData.get('gender'),
             age: parseInt(formData.get('age')),
+            ethnicity: formData.get('ethnicity'),
             is_student: formData.get('is_student') === 'true',
-            student_id: formData.get('student_id') || '',
             grade: formData.get('grade') || '',
             discipline: formData.get('discipline') || '',
             major: formData.get('major') || '',
@@ -310,7 +338,9 @@ survey1_timeline.push({
             children_status: formData.get('children_status') || ''
         };
 
+        console.log('responseData on_finish:', responseData); // 输出调试信息
+
         // 保存数据
-        jsPsych.data.addProperties(responseData);
+        jsPsych.finishTrial();
     }
 });

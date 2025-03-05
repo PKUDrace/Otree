@@ -27,18 +27,52 @@
   <body></body>
   <script src="intro.js"></script>
   <script src="survey1_v2.js"></script>
+  <script src="survey2.js"></script>
+  <script src="survey3.js"></script>
   <script>
-    const jsPsych = initJsPsych({
-        on_finish: function () {
-            jsPsych.data.get().localSave("csv", "stroop_data.csv");
-        }
-    });
+  const jsPsych = initJsPsych({
+    on_finish: function() {
+        // 自定义保存方法
+        const data = jsPsych.data.get().csv();
+        const bom = new Uint8Array([0xEF, 0xBB, 0xBF]); // UTF-8 BOM头
+        const blob = new Blob([bom, data], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'experiment_data.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+  });
     // 定义时间线
     let timeline = [];
 
     // 引入各部分的时间线
     timeline = timeline.concat(intro_timeline);
     timeline = timeline.concat(survey1_timeline);
+    timeline = timeline.concat(survey2_timeline); 
+    timeline = timeline.concat(survey3_timeline);
+    
+    timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p>实验结束，谢谢您的参与！</p><p>点击下面的按钮下载数据。</p><button id="download-data" class="jspsych-btn">下载数据</button>',
+    choices: "NO_KEYS",
+    on_load: function() {
+        document.getElementById('download-data').addEventListener('click', function() {
+            const data = jsPsych.data.get().csv();
+            const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            const blob = new Blob([bom, data], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'experiment_data.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+      }
+    });
     
 
 

@@ -1,6 +1,6 @@
 const survey1_timeline = [];
 
-const surveyHTML = `
+const survey1HTML = `
 <div class="survey-container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
     <h3>问卷1</h3>
     
