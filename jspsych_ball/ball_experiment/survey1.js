@@ -1,4 +1,3 @@
-// survey_1.js
 const survey1_timeline = [];
 
 const surveyHTML = `
@@ -86,7 +85,7 @@ survey1_timeline.push({
     choices: "NO_KEYS",
     trial_duration: null,
     
-    on_start: function() {
+    on_load: function() {
         const studentFields = document.getElementById('student-fields');
         const studentRadios = document.getElementsByName('is_student');
         
