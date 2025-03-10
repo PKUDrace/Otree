@@ -8,8 +8,8 @@
 
     <script src="https://www.naodao.com/public/experiment/libs/jspsych-7/jspsych.js"></script>
     <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-html-keyboard-response.js"></script>
-    <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-categorize-html.js"></script>
-
+    <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-survey-html-form.js"></script>
+    <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-call-function.js"></script>
     <link rel="stylesheet" href="https://www.naodao.com/public/experiment/libs/jspsych-7/css/jspsych.css">
     <style>
         /* 自定义样式 */
@@ -37,8 +37,6 @@
 
     // 引入各部分的时间线
     timeline = timeline.concat(game1_timeline);
-    
-
 
     // 运行实验
     jsPsych.run(timeline);
