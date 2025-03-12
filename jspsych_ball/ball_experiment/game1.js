@@ -7,35 +7,35 @@ const gameState = {
     boxType: '',
     coinSequence: [],
     currentAttempt: 0,
-    maxAttempts: 9, // 每局最多进行 9 轮游戏
-    numRounds: 5
+    maxAttempts: 9, // 每局最多进行 9 轮
+    numRounds: 5     // 总共有 5 局
 };
 
 // 生成硬币序列函数
 function generateCoinSequence(boxType) {
     const probabilities = boxType === '偏白箱' ? 
-        [0.6, 0.4, 0] : [0.4, 0.6, 0];
+        [0.6, 0.4, 0] : [0.4, 0.6, 0]; // 白球概率 60% 或 40%
     
     return Array.from({length: gameState.maxAttempts}, () => {
         const rand = Math.random();
-        return rand < probabilities[0] ? 'gold' :
-               rand < probabilities[0]+probabilities[1] ? 'silver' : 'copper';
+        return rand < probabilities[0] ? 'gold' :    // 白球
+               rand < probabilities[0]+probabilities[1] ? 'silver' : 'copper'; // 黑球
     });
 }
 
 // 初始化游戏状态
 const initGameState = {
-    type: jsPsychCallFunction, // 使用 call-function 插件对象
+    type: jsPsychCallFunction,
     func: () => {
         gameState.boxType = Math.random() < 0.5 ? '偏白箱' : '偏黑箱';
         gameState.coinSequence = generateCoinSequence(gameState.boxType);
-        gameState.currentAttempt = 0;
+        gameState.currentAttempt = 0; // 重置当前轮次
     }
 };
 
 // 介绍页1
 const intro1 = {
-    type: jsPsychHtmlKeyboardResponse, // 使用 html-keyboard-response 插件对象
+    type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <div style="text-align: left; margin: 50px 150px;">
             <h1 style="text-align: left;">游戏 1：游戏总则</h1>
@@ -47,18 +47,13 @@ const intro1 = {
             <button id="next-button" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: rgb(49, 108, 244); color: white; border: none; border-radius: 5px; cursor: pointer;">下一页</button>
         </div>
     `,
-    choices: "NO_KEYS", // 禁用空格键
-    on_load: () => {
-        // 添加按钮点击事件
-        document.getElementById('next-button').addEventListener('click', () => {
-            jsPsych.finishTrial();
-        });
-    }
+    choices: "NO_KEYS",
+    on_load: () => document.getElementById('next-button').addEventListener('click', jsPsych.finishTrial)
 };
 
 // 介绍页2
 const intro2 = {
-    type: jsPsychHtmlKeyboardResponse, // 使用 html-keyboard-response 插件对象
+    type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <div style="text-align: left; margin: 100px 100px;">
             <h1 style="text-align: left;">游戏 1：游戏介绍</h1>
@@ -88,13 +83,8 @@ const intro2 = {
             <button id="start-button" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: rgb(49, 108, 244); color: white; border: none; border-radius: 5px; cursor: pointer;">开始游戏</button>
         </div>
     `,
-    choices: "NO_KEYS", // 禁用空格键
-    on_load: () => {
-        // 添加按钮点击事件
-        document.getElementById('start-button').addEventListener('click', () => {
-            jsPsych.finishTrial();
-        });
-    }
+    choices: "NO_KEYS",
+    on_load: () => document.getElementById('start-button').addEventListener('click', jsPsych.finishTrial)
 };
 
 // 生成表格头部
@@ -103,87 +93,68 @@ function generateTableHeader() {
         <thead>
             <tr>
                 <th>轮次</th>
-                ${Array.from({ length: gameState.maxAttempts }).map((_, i) => `<th>${i + 1}</th>`).join('')}
+                ${Array(9).fill().map((_, i) => {
+                    const round = i + 1;
+                    let bgColor;
+                    if (round < gameState.currentAttempt + 1) {
+                        bgColor = 'rgb(211,211,211)';
+                    } else if (round === gameState.currentAttempt + 1) {
+                        bgColor = 'rgb(180,195,220)';
+                    } else {
+                        bgColor = 'white';
+                    }
+                    return `<th style="background-color: ${bgColor};">${round}</th>`;
+                }).join('')}
             </tr>
         </thead>
     `;
 }
 
-// 生成硬币行
+// 生成硬币行（修正符号映射）
 function generateCoinRow(coins) {
     return `
         <tr>
             <td>结果</td>
-            ${coins.map(coin => {
-                // 修正符号映射：白球用○，黑球用●
-                const symbol = coin === 'gold' ? '○' : '●';
-                return `<td>${symbol}</td>`;
-            }).join('')}
-            ${Array.from({ length: gameState.maxAttempts - coins.length }).map(() => `<td></td>`).join('')}
+            ${coins.map(coin => `<td><img src="img/${coin}.png" style="width: 35px; height: 35px; display: block; margin: auto;"></td>`).join('')}
+            ${Array(9 - coins.length).fill('<td></td>').join('')}
         </tr>
     `;
 }
-
-// 生成结果行
-function generateResultRow() {
-    return `
-        <tr>
-            <td>结果</td>
-            ${Array.from({ length: gameState.maxAttempts }).map(() => `<td></td>`).join('')}
-        </tr>
-    `;
-}
-
 
 // 决策页模板
-// 修改后的决策页模板（优化选项显示逻辑）
 function createDecisionTrial() {
     return {
         type: jsPsychSurveyMultiChoice,
-        questions: [
-            {
-                prompt: () => {
-                    const coins = gameState.coinSequence.slice(0, gameState.currentAttempt + 1);
-                    const isFinalAttempt = gameState.currentAttempt === 8;
-                    
-                    return `
-                        <style>
-                            ${tableStyles}
-                            ${formStyles}
-                        </style>
-                        <p style="font-size:25px">第 ${gameState.currentRound} 局，第 ${gameState.currentAttempt + 1} 轮</p>
-                        <table class="game-table">
-                            ${generateTableHeader()}
-                            ${generateCoinRow(coins)}
-                        </table>
-                    `;
-                },
-                options: () => {
-                    const isFinalAttempt = gameState.currentAttempt === 8;
-                    return [
-                        'A. 这是偏白箱',
-                        'B. 这是偏黑箱',
-                        ...(!isFinalAttempt ? ['C. 暂不判断，进入下一轮'] : [])
-                    ];
-                },
-                required: true,
-                horizontal: false
-            }
-        ],
+        questions: [{
+            prompt: () => `
+                <div style="position: relative;">
+                    <p style="font-size:25px">第 ${gameState.currentRound} 局，第 ${gameState.currentAttempt + 1} 轮</p>
+                    <table class="game-table">
+                        ${generateTableHeader()}
+                        ${generateCoinRow(gameState.coinSequence.slice(0, gameState.currentAttempt + 1))}
+                    </table>
+                    <p>请选择一个选项，然后点击确认</p>
+                    <img src="img/concept2.png" style="position: absolute; bottom: -250px; right: 20px; width: 180px; height: auto;">
+                </div>
+            `,
+            options: () => {
+                const isFinal = gameState.currentAttempt === 8;
+                return isFinal ? ['A. 这是偏白箱', 'B. 这是偏黑箱'] 
+                               : ['A. 这是偏白箱', 'B. 这是偏黑箱', 'C. 暂不判断，进入下一轮'];
+            },
+            required: true
+        }],
         button_label: "确认",
         on_finish: (data) => {
             const response = data.response.Q0;
-            if(response) {
-                const guess = response.split('. ')[1];
+            if (response.startsWith('A') || response.startsWith('B')) {
+                const guess = response.includes('偏白箱') ? '偏白箱' : '偏黑箱';
                 const correct = guess === gameState.boxType;
                 gameState.totalEarnings += correct ? 1 : -1;
-                
-                jsPsych.data.addProperties({
+                gameState.currentAttempt = 9; // 强制结束当前局
+                jsPsych.data.addProperties({ 
                     round: gameState.currentRound,
-                    attempt: gameState.currentAttempt + 1,
-                    guess: guess,
                     outcome: correct ? '正确' : '错误',
-                    earnings: correct ? 1 : -1,
                     total: gameState.totalEarnings
                 });
             } else {
@@ -193,23 +164,28 @@ function createDecisionTrial() {
     };
 }
 
+
 // 结果页
 const resultPage = {
-    type: jsPsychHtmlKeyboardResponse, // 使用 html-keyboard-response 插件对象
+    type: jsPsychHtmlKeyboardResponse,
     stimulus: () => {
-        const isFinal = gameState.currentRound === gameState.numRounds;
+        const lastTrialData = jsPsych.data.get().last(1).values()[0];
+        const guess = lastTrialData.response.Q0.includes('偏白箱') ? '偏白箱' : '偏黑箱';
+        const correct = guess === gameState.boxType;
+        const resultText = `你的判断是：“这是${guess}”，判断结果：<b>“${correct ? '正确' : '错误'}”</b>，收益${correct ? '+1' : '-1'}`;
         return `
-            <h2>${isFinal ? '游戏 1 结束' : '游戏 1：进行中'}</h2>
-            <p>总收益：${gameState.totalEarnings}元</p>
-            <button class="jspsych-btn">${isFinal ? '进入游戏2' : '下一局'}</button>
+            <h2>${gameState.currentRound === 5 ? '游戏结束' : '下一局'}</h2>
+            <p>${resultText}</p>
+            <p><b>总收益：${gameState.totalEarnings}元</b></p>
+            <button class="jspsych-btn" style="margin-top: 40px; display: block; margin-left: auto; margin-right: auto;">${gameState.currentRound === 5 ? '完成' : '继续'}</button>
         `;
     },
     choices: "NO_KEYS",
     on_load: () => {
         document.querySelector('button').addEventListener('click', () => {
-            if(gameState.currentRound < gameState.numRounds) {
+            if (gameState.currentRound < 5) {
                 gameState.currentRound++;
-                gameState.currentAttempt = 0;
+                gameState.currentAttempt = 0; // 重置轮次
                 gameState.boxType = Math.random() < 0.5 ? '偏白箱' : '偏黑箱';
                 gameState.coinSequence = generateCoinSequence(gameState.boxType);
             }
@@ -218,67 +194,37 @@ const resultPage = {
     }
 };
 
-// 单轮时间线
+// 单局时间线（严格循环控制）
 const roundTimeline = {
     timeline: [
         initGameState,
         {
             timeline: [createDecisionTrial()],
-            loop_function: () => {
-                const lastData = jsPsych.data.get().last(1).values()[0];
-                return !lastData?.guess && gameState.currentAttempt < 9;
-
-            }
+            loop_function: () => gameState.currentAttempt < 9 // 最多循环9次
         },
         resultPage
     ]
 };
 
-// 主时间线
+// 主时间线（5局循环）
 game1_timeline.push(
     intro1,
     intro2,
     {
         timeline: [roundTimeline],
-        repetitions: gameState.numRounds
+        repetitions: 5 // 直接重复5次
     }
 );
 
 // 样式定义
 const tableStyles = `
-    .game-table {
-        width: 70%;
-        border-collapse: collapse;
-        margin: 20px auto;
-    }
-    .game-table th, .game-table td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: center;
-    }
-    .current-attempt {
-        background-color: lightsteelblue;
-    }
-    .game-table td {
-        min-width: 50px;
-        height: 50px;
-        font-size: 20px;
-    }
+    .game-table td { min-width: 50px; height: 50px; font-size: 20px; }
+    .game-table th, .game-table td { border: 1px solid black; text-align: center; }
+    .jspsych-survey-multi-choice-prompt { margin-bottom: 20px; }
+    .jspsych-survey-multi-choice-option { display: block; margin-bottom: 10px; }
+    .jspsych-btn { display: block; margin: -20px 0 0 20px; background-color: rgb(112,159,247); color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer; }
+    /* 隐藏 SurveyMultiChoice 的必填星号 */
+    .jspsych-survey-multi-choice-prompt .required {display: none;}
+}
 `;
-
-const formStyles = `
-    .radio-group {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin: 20px 0;
-    }
-    .radio-group label {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    input[type="radio"] {
-        transform: scale(1.3);
-    }
-`;
+document.head.insertAdjacentHTML('beforeend', `<style>${tableStyles}</style>`);
