@@ -102,86 +102,85 @@ function generateTableHeader() {
     return `
         <thead>
             <tr>
-                <th>轮次</th>
                 ${Array.from({ length: gameState.maxAttempts }).map((_, i) => `<th>${i + 1}</th>`).join('')}
             </tr>
         </thead>
     `;
 }
 
-// 生成硬币行
+
 function generateCoinRow(coins) {
     return `
         <tr>
-            <td>结果</td>
             ${coins.map(coin => {
-                // 修正符号映射：白球用○，黑球用●
-                const symbol = coin === 'gold' ? '○' : '●';
-                return `<td>${symbol}</td>`;
+                const symbol = coin === 'gold' ? '○' : '●'; // gold=白球，silver=黑球
+                return `<td class="${gameState.currentAttempt + 1 === coins.length ? 'current-attempt' : ''}">${symbol}</td>`
             }).join('')}
             ${Array.from({ length: gameState.maxAttempts - coins.length }).map(() => `<td></td>`).join('')}
         </tr>
     `;
 }
 
-// 生成结果行
-function generateResultRow() {
-    return `
-        <tr>
-            <td>结果</td>
-            ${Array.from({ length: gameState.maxAttempts }).map(() => `<td></td>`).join('')}
-        </tr>
-    `;
-}
-
-
 // 决策页模板
 // 修改后的决策页模板（优化选项显示逻辑）
 function createDecisionTrial() {
     return {
-        type: jsPsychSurveyMultiChoice,
-        questions: [
-            {
-                prompt: () => {
-                    const coins = gameState.coinSequence.slice(0, gameState.currentAttempt + 1);
-                    const isFinalAttempt = gameState.currentAttempt === 8;
+        type: jsPsychSurveyHtmlForm,
+        button_label: "确认", // 禁用默认的提交按钮
+        html: () => {
+            const coins = gameState.coinSequence.slice(0, gameState.currentAttempt + 1);
+            const isFinalAttempt = gameState.currentAttempt === 8;
+            
+            return `
+                <p style="font-size:25px">第 ${gameState.currentRound} 局，第 ${gameState.currentAttempt + 1} 轮</p>
+                <table class="game-table">
+                    ${generateTableHeader()}
+                    ${generateCoinRow(coins)}
+                </table>
+                <form id="decision-form">
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="guess" value="偏白箱" required>
+                            A. 这是偏白箱
+                        </label>
+                        <label>
+                            <input type="radio" name="guess" value="偏黑箱">
+                            B. 这是偏黑箱
+                        </label>
+                        ${!isFinalAttempt ? `
+                        <label>
+                            <input type="radio" name="guess" value="">
+                            C. 暂不判断，进入下一轮
+                        </label>` : ''}
+                    </div>
+                    <button type="submit" class="jspsych-btn">确认</button>
+                </form>
+                <style>
+                    ${tableStyles}
+                    ${formStyles}
                     
-                    return `
-                        <style>
-                            ${tableStyles}
-                            ${formStyles}
-                        </style>
-                        <p style="font-size:25px">第 ${gameState.currentRound} 局，第 ${gameState.currentAttempt + 1} 轮</p>
-                        <table class="game-table">
-                            ${generateTableHeader()}
-                            ${generateCoinRow(coins)}
-                        </table>
-                    `;
-                },
-                options: () => {
-                    const isFinalAttempt = gameState.currentAttempt === 8;
-                    return [
-                        'A. 这是偏白箱',
-                        'B. 这是偏黑箱',
-                        ...(!isFinalAttempt ? ['C. 暂不判断，进入下一轮'] : [])
-                    ];
-                },
-                required: true,
-                horizontal: false
-            }
-        ],
-        button_label: "确认",
+                    .current-attempt {
+                        background-color: #b0c4de;
+                        font-weight: bold;
+                    }
+                    .game-table td {
+                        min-width: 50px;
+                        height: 50px;
+                        font-size: 20px;
+                    }
+                </style>
+            `;
+        },
         on_finish: (data) => {
-            const response = data.response.Q0;
-            if(response) {
-                const guess = response.split('. ')[1];
-                const correct = guess === gameState.boxType;
+            const response = data.response;
+            if(response.guess) {
+                const correct = response.guess === gameState.boxType;
                 gameState.totalEarnings += correct ? 1 : -1;
                 
                 jsPsych.data.addProperties({
                     round: gameState.currentRound,
                     attempt: gameState.currentAttempt + 1,
-                    guess: guess,
+                    guess: response.guess,
                     outcome: correct ? '正确' : '错误',
                     earnings: correct ? 1 : -1,
                     total: gameState.totalEarnings
@@ -192,7 +191,6 @@ function createDecisionTrial() {
         }
     };
 }
-
 // 结果页
 const resultPage = {
     type: jsPsychHtmlKeyboardResponse, // 使用 html-keyboard-response 插件对象
@@ -258,11 +256,6 @@ const tableStyles = `
     }
     .current-attempt {
         background-color: lightsteelblue;
-    }
-    .game-table td {
-        min-width: 50px;
-        height: 50px;
-        font-size: 20px;
     }
 `;
 
