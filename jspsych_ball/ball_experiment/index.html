@@ -8,7 +8,10 @@
 
     <script src="https://www.naodao.com/public/experiment/libs/jspsych-7/jspsych.js"></script>
     <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-html-keyboard-response.js"></script>
-    <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-categorize-html.js"></script>
+    <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-survey-html-form.js"></script>
+    <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-call-function.js"></script>
+    <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-survey-multi-choice.js"></script>
+    <script src="https://www.naodao.com/public/experiment/libs/plugin/plugin-survey-multi-choice.js"></script>
 
     <link rel="stylesheet" href="https://www.naodao.com/public/experiment/libs/jspsych-7/css/jspsych.css">
     <style>
@@ -29,6 +32,7 @@
   <script src="survey1_v2.js"></script>
   <script src="survey2.js"></script>
   <script src="survey3.js"></script>
+  <script src="game1.js"></script> 
   <script>
   const jsPsych = initJsPsych({
     on_finish: function() {
@@ -53,6 +57,7 @@
     timeline = timeline.concat(survey1_timeline);
     timeline = timeline.concat(survey2_timeline); 
     timeline = timeline.concat(survey3_timeline);
+    timeline = timeline.concat(game1_timeline);
     
     
     timeline.push({

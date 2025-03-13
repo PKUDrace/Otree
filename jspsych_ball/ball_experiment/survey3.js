@@ -1,7 +1,7 @@
 const survey3_timeline = [];
 
 const survey3HTML = `
-<div class="survey-container" style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: left;">
+<div class="survey3-container" style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: left;">
 
     <h3>问卷3</h3>
     <p><b>请完成下面 8 组问题。</b></p>
@@ -125,12 +125,22 @@ const survey3HTML = `
             </div>
         </div>
         <br>
-        <div style="text-align: center; margin-top: 2rem;">
-            <button type="submit" class="jspsych-btn" style="padding: 12px 24px; font-size: 16px;">提交</button>
-        </div>
+        <button id="survey3_button" type="submit" class="survey3-btn" style="margin-top: 20px;">提交</button>
         <br>
     </form>
 </div>
+<style>
+    .survey3-btn {
+        background-color: rgb(49, 108, 244);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin: 0 auto; /* 添加居中对齐 */
+        display: block; /* 使按钮成为块级元素 */
+    }
+</style>
 `;
 
 survey3_timeline.push({

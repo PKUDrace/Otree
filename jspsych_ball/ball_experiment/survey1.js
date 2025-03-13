@@ -1,7 +1,7 @@
 const survey1_timeline = [];
 
 const survey1HTML = `
-<div class="survey-container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
+<div class="survey1-container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
     <h3>问卷1</h3>
     
     <form id="survey-form">
@@ -74,9 +74,19 @@ const survey1HTML = `
             </div>
         </div>
 
-        <button type="submit" class="jspsych-btn" style="margin-top: 20px;">提交</button>
+        <button id="survey1_button" type="submit" class="survey1-btn" style="margin-top: 20px; display: flex; justify-content: space-between;">提交</button>
     </form>
 </div>
+<style>
+    .survey1-btn {
+        background-color: rgb(112, 1594, 138);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+</style>
 `;
 
 survey1_timeline.push({

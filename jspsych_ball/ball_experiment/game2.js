@@ -1,14 +1,14 @@
-const game1_timeline = [];
+const game2_timeline = [];
 
 // 状态管理对象
 const gameState = {
     currentRound: 1,
-    totalEarnings: 5,
+    totalEarnings: 10, // 初始资金
     boxType: '',
     coinSequence: [],
     currentAttempt: 0,
     maxAttempts: 9, // 每局最多进行 9 轮
-    numRounds: 5     // 总共有 5 局
+    numRounds: 10    // 总共有 10 局
 };
 
 // 生成硬币序列函数
@@ -38,12 +38,16 @@ const intro1 = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <div style="text-align: left; margin: 50px 150px;">
-            <h1 style="text-align: left;">游戏 1：游戏总则</h1>
+            <h1 style="text-align: left;">游戏 2：游戏介绍</h1>
             <br>
-            <p>本游戏有<b>两个</b>箱子：“<b>偏白箱</b>”和“<b>偏黑箱</b>”。偏白箱中抽出白球的概率更高，偏黑箱中抽出黑球的概率更高。具体概率如下图：</p>
-            <img src="img/concept.png" style="width:750px; display: block; margin: 0 auto;">
-            <p><b>每局游戏</b>开始时，系统从两个箱子中<b>随机</b>挑选一个。<b>每局最多进行 ${gameState.maxAttempts} 轮游戏</b>。每一轮，系统从本局初被挑中的箱子里抽取一个球，抽球<b>不需要成本</b>。</p>
-            <p>每局游戏里，你需要根据当前及之前轮次抽出的所有球<b>推测</b>本局被挑中的<b>是哪个箱子</b>。</p>
+            <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 元启动资金，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 2 中的收益为${gameState.numRounds}局游戏的累积收益。</p>
+            <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。<span style="color: red;">在一局游戏中，你和对方看到的信息（从同一个箱中抽出的球）是完全相同的</span>。在整个游戏过程中你们<span style="color: red;">看不到彼此的选择</span>。</p>
+            <p>${gameState.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下规则计算各自<b>每局的收益</b>：</p>
+            <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
+                <li>情况 1：两位玩家<strong>在同一轮次</strong>做出判断，<b>彼此收益互不影响</b>，判断正确者得 1 元，判断错误者失 1 元。</li>
+                <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
+            </div>
+            <img src="img/concept3.png" height="350px" style="display: block; margin: 20px auto;" />
             <button id="next-button" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">下一页</button>
         </div>
     `,
@@ -56,10 +60,10 @@ const intro2 = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <div style="text-align: left; margin: 100px 100px;">
-            <h1 style="text-align: left;">游戏 1：游戏介绍</h1>
+            <h1 style="text-align: left;">游戏 2：游戏介绍</h1>
             <div style="display:flex;align-items:center">
                 <div style="flex:4">
-                    <p>本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 元启动资金，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 1 中的收益为 ${gameState.numRounds}局游戏的累积收益。<b>每局游戏具体规则如下：</b></p>
+                    <p>本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 元启动资金，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 2 中的收益为 ${gameState.numRounds}局游戏的累积收益。<b>每局游戏具体规则如下：</b></p>
 
                     <p>
                         (1) 每局开始时，系统随机挑选⼀个箱子，按右图规律从箱中抽球 (后续页面也会展示该规律)。
@@ -169,26 +173,22 @@ function createDecisionTrial() {
     };
 }
 
-
 // 结果页
 const resultPage = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: () => {
-        const lastTrialData = jsPsych.data.get().last(1).values()[0];
-        const guess = lastTrialData.response.Q0.includes('偏白箱') ? '偏白箱' : '偏黑箱';
-        const correct = guess === gameState.boxType;
-        const resultText = `你的判断是：“这是${guess}”，判断结果：<b>“${correct ? '正确' : '错误'}”</b>，收益${correct ? '+1' : '-1'}`;
+        const resultText = `你的收益将与相同硬币序列另一位参与者的收益进行比较，正确判断将获得1元，错误判断将失去1元。`;
         return `
-            <h2>${gameState.currentRound === 5 ? '游戏结束' : '下一局'}</h2>
+            <h2>${gameState.currentRound === 10 ? '游戏结束' : '下一局'}</h2>
             <p>${resultText}</p>
             <p><b>总收益：${gameState.totalEarnings}元</b></p>
-            <button class="jspsych-btn" style="margin-top: 40px; display: block; margin-left: auto; margin-right: auto;">${gameState.currentRound === 5 ? '完成' : '继续'}</button>
+            <button class="jspsych-btn" style="margin-top: 40px; display: block; margin-left: auto; margin-right: auto;">${gameState.currentRound === 10 ? '完成' : '继续'}</button>
         `;
     },
     choices: "NO_KEYS",
     on_load: () => {
         document.querySelector('button').addEventListener('click', () => {
-            if (gameState.currentRound < 5) {
+            if (gameState.currentRound < 10) {
                 gameState.currentRound++;
                 gameState.currentAttempt = 0; // 重置轮次
                 gameState.boxType = Math.random() < 0.5 ? '偏白箱' : '偏黑箱';
@@ -211,13 +211,13 @@ const roundTimeline = {
     ]
 };
 
-// 主时间线（5局循环）
-game1_timeline.push(
+// 主时间线（10局循环）
+game2_timeline.push(
     intro1,
     intro2,
     {
         timeline: [roundTimeline],
-        repetitions: 5 // 直接重复5次
+        repetitions: 10 // 直接重复10次
     }
 );
 

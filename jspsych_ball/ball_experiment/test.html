@@ -27,7 +27,7 @@
   </head>
 
   <body></body>
-  <script src="game1.js"></script>
+  <script src="game2.js"></script>
   <script>
     const jsPsych = initJsPsych({
         on_finish: function () {
@@ -38,7 +38,7 @@
     let timeline = [];
 
     // 引入各部分的时间线
-    timeline = timeline.concat(game1_timeline);
+    timeline = timeline.concat(game2_timeline);
 
     // 运行实验
     jsPsych.run(timeline);

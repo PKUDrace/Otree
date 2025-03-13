@@ -199,12 +199,21 @@ const survey1HTML = `
             </div>
         </div>
         
-        <div style="text-align: center; margin-top: 2rem;">
-            <button type="submit" class="jspsych-btn" style="padding: 12px 24px; font-size: 16px;">提交</button>
-        </div>
-        <br>
+        <button id="survey1_button" type="submit" class="survey1-btn" style="margin-top: 20px;">提交</button>
     </form>
 </div>
+<style>
+    .survey1-btn {
+    background-color: rgb(49, 108, 244);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0 auto; /* 添加居中对齐 */
+    display: block; /* 使按钮成为块级元素 */
+}
+</style>
 `;
 
 // 添加统一的CSS样式
