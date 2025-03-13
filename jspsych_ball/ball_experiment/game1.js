@@ -134,7 +134,7 @@ function createDecisionTrial() {
                         ${generateCoinRow(gameState.coinSequence.slice(0, gameState.currentAttempt + 1))}
                     </table>
                     <p>请选择一个选项，然后点击确认</p>
-                    <img src="img/concept2.png" style="position: absolute; bottom: -250px; right: 20px; width: 180px; height: auto;">
+                    <img src="img/concept2.png" style="position: absolute; bottom: -200px; right: 20px; width: 180px; height: auto;">
                 </div>
             `,
             options: () => {
@@ -142,10 +142,15 @@ function createDecisionTrial() {
                 return isFinal ? ['A. 这是偏白箱', 'B. 这是偏黑箱'] 
                                : ['A. 这是偏白箱', 'B. 这是偏黑箱', 'C. 暂不判断，进入下一轮'];
             },
-            required: true
+            required: false
         }],
         button_label: "确认",
         on_finish: (data) => {
+            // 添加手动校验
+            if (!data.response.Q0) {
+                alert("必须选择一个选项！");
+                return false; // 阻止提交
+            }
             const response = data.response.Q0;
             if (response.startsWith('A') || response.startsWith('B')) {
                 const guess = response.includes('偏白箱') ? '偏白箱' : '偏黑箱';
@@ -222,9 +227,8 @@ const tableStyles = `
     .game-table th, .game-table td { border: 1px solid black; text-align: center; }
     .jspsych-survey-multi-choice-prompt { margin-bottom: 20px; }
     .jspsych-survey-multi-choice-option { display: block; margin-bottom: 10px; }
-    .jspsych-btn { display: block; margin: -20px 0 0 20px; background-color: rgb(112,159,247); color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer; }
-    /* 隐藏 SurveyMultiChoice 的必填星号 */
-    .jspsych-survey-multi-choice-prompt .required {display: none;}
+    .jspsych-btn { display: block; margin: -20px 0 0 20px; background-color: rgb(112,159,247); color:white; border:none; border-radius:5px; padding:10px 20px; cursosr:pointer; }
+    .jspsych-survey-multi-choice-required::after {content: "" !important; /* 清除星号 */
 }
 `;
 document.head.insertAdjacentHTML('beforeend', `<style>${tableStyles}</style>`);
