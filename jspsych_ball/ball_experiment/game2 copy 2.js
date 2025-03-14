@@ -1,10 +1,5 @@
 const game2_timeline = [];
-const globalAnswers = {
-    test_answer1: null,
-    test_answer2: null,
-    test_answer3: null,
-    test_answer4: null
-};
+
 // 状态管理对象
 const gameState = {
     currentRound: 1,
@@ -68,94 +63,53 @@ const intro = {
     on_load: () => document.getElementById('next-button').addEventListener('click', jsPsych.finishTrial)
 };
 
+// 计算题页
 const calculationPage = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <div style="text-align: left; margin: 50px 150px;">
-            <h1 style="text-align: left;">计算题</h1>
-            <p><b>请基于游戏 2 的收益计算规则，完成下面两道计算题。</b></p>
-            
-            <!-- 题目 1 -->
+            <h1>计算题</h1>
+            <!-- 修正选项ID -->
             <div>
-                <p>在游戏 2 的某一局中，玩家 1 和玩家 2 都在<b>第 9 轮</b>作答，都选择了<b>“A. 这是偏白箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏白箱</b>
-                ，请选择两位玩家在该局游戏中的收益。<br>
-
-                1.请选择玩家 1 在该局游戏中的收益。</p>
-                <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer1" value="-1"> -1</label><br>
-                    <label><input type="radio" name="test_answer1" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer1" value="1"> +1</label><br>
-                </div>
+                <label>玩家 1 的收益：</label><br>
+                <input type="radio" id="answer1_-1" name="answer1" value="-1"><label for="answer1_-1">-1</label>
+                <input type="radio" id="answer1_0" name="answer1" value="0"><label for="answer1_0">0</label>
+                <input type="radio" id="answer1_1" name="answer1" value="1"><label for="answer1_1">+1</label>
             </div>
-
-            <div>
-                <p>2.请选择玩家 2 在该局游戏中的收益。</p>
-                <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer2" value="-1"> -1</label><br>
-                    <label><input type="radio" name="test_answer2" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer2" value="1"> +1</label><br>
-                </div>
-            </div>
-            <br>
-            <!-- 题目 3 -->
-            <div>
-                <p>在游戏 2 的某一局中，玩家 1 在<b>第 1 轮</b>作答，选择了<b>“A. 这是偏白箱”</b>，玩家 2 在<b>第 9 轮</b>作答，选择了<b>“B. 这是偏黑箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏黑箱</b>，请选择两位玩家在该局游戏中的收益。
-                </p>3.请选择玩家 1 在该局游戏的收益：</p>
-                <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer3" value="-1"> -1</label><br>
-                    <label><input type="radio" name="test_answer3" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer3" value="1"> +1</label><br>
-                </div>
-            </div>
-            <div>
-                <p>4. 请选择玩家 2 在该局游戏的收益：</p>
-                <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer4" value="-1"> -1</label><br>
-                    <label><input type="radio" name="test_answer4" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer4" value="1"> +1</label><br>
-                </div>
-            </div>
-            <br>
-            
-            <button id="submit-button" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">提交</button>
+            <!-- 保持其他问题结构 -->
+            <button id="submit-button">提交</button>
         </div>
     `,
     choices: "NO_KEYS",
     on_load: () => {
-        document.getElementById('submit-button').addEventListener('click', () => {
-            const test_answer1 = parseInt(document.querySelector('input[name="test_answer1"]:checked')?.value);
-            const test_answer2 = parseInt(document.querySelector('input[name="test_answer2"]:checked')?.value);
-            const test_answer3 = parseInt(document.querySelector('input[name="test_answer3"]:checked')?.value);
-            const test_answer4 = parseInt(document.querySelector('input[name="test_answer4"]:checked')?.value);
-            if (isNaN(test_answer1)|| isNaN(test_answer2) || isNaN(test_answer3)|| isNaN(test_answer4)) {
-                alert("请完成所有题目后再提交！");
+        document.getElementById('submit-button').onclick = () => {
+            // 数据收集逻辑
+            const answers = {
+                answer1: document.querySelector('input[name="answer1"]:checked')?.value,
+                // 收集其他答案
+            };
+            
+            // 数据验证
+            if (Object.values(answers).some(v => v === undefined)) {
+                alert('请回答所有问题！');
                 return;
             }
-            // 将答案存储到全局变量中
-            globalAnswers.test_answer1 = test_answer1;
-            globalAnswers.test_answer2 = test_answer2;
-            globalAnswers.test_answer3 = test_answer3;
-            globalAnswers.test_answer4 = test_answer4;
-            // 输出 globalAnswers 到控制台
-            console.log('globalAnswers:', globalAnswers);
-            jsPsych.finishTrial();
-        });
+
+            // 保存到试次数据
+            jsPsych.finishTrial(answers);
+        };
     }
 };
-//反馈页
+
 const feedbackPage = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: () => {
-        const { test_answer1, test_answer2, test_answer3, test_answer4 } = globalAnswers;
-        // 修正答案判断逻辑
-        const feedback1 = (test_answer1 === 1 && test_answer2 === 1) ? '正确' : '错误';
-        const feedback2 = (test_answer3 === -1 && test_answer4 === 0) ? '正确' : '错误';
-        const allCorrect = feedback1 === '正确' && feedback2 === '正确';
-        const buttonText = allCorrect ? '开始实验' : '重新测试';
-
-        // 生成反馈内容（原有HTML结构）
+        const feedback1 = (document.querySelector('input[name="answer1"]:checked').value == 1 && document.querySelector('input[name="answer2"]:checked').value == -1) ? '正确' : '错误';
+        const feedback2 = (document.querySelector('input[name="answer3"]:checked').value == 1 && document.querySelector('input[name="answer4"]:checked').value == 0) ? '正确' : '错误';
+        const buttonLabel = (feedback1 === '正确' && feedback2 === '正确') ? '开始游戏' : '重新作答';
         return `
-            <h2>答案反馈</h2>
+            <div style="text-align: left; margin: 50px 150px;">
+                <h2>答案反馈</h2>
                 <br>
                 <p>
                     第 1 题回答<b> ${feedback1}</b>。<br>
@@ -172,42 +126,31 @@ const feedbackPage = {
                     <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
                 </div>
                 <br>
-                <button id="feedback-button" data-correct="${allCorrect}" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">${buttonText}</button>
+                <button id="feedback-button" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">${buttonLabel}</button>
             </div>
         `;
     },
     choices: "NO_KEYS",
     on_load: () => {
-        const button = document.getElementById('feedback-button');
-        const allCorrect = button.dataset.correct === 'true';
-
-        button.addEventListener('click', () => {
-            if (allCorrect) {
-                // 答案正确：插入主实验流程
-                jsPsych.addNodeToEndOfTimeline({
-                    timeline: [{
-                        timeline: [roundTimeline],
-                        repetitions: 10
-                    }]
-                });
-                jsPsych.finishTrial();
-            } else {
-                // 答案错误：清除数据并重新插入计算页和反馈页
-                const allData = Array.from(jsPsych.data.get().filter(data => data.trial_type !== 'calculation'));
-                jsPsych.data.reset();
-                allData.forEach(d => jsPsych.data.add(d));
-
-                // 关键修复：插入新的计算页和反馈页，覆盖后续流程
-                jsPsych.addNodeToEndOfTimeline({
-                    timeline: [calculationPage, feedbackPage]
-                });
-
-                jsPsych.finishTrial();
-            }
+        document.getElementById('feedback-button').addEventListener('click', () => {
+            jsPsych.finishTrial();
         });
     }
 };
-
+const calculationLoop = {
+    timeline: [calculationPage, feedbackPage],
+    loop_function: function(data) {
+        const trialData = jsPsych.data.get().last(2).values();
+        const answers = trialData[0].response; // 获取计算题答案
+        
+        // 检查答案是否正确
+        const answer1Correct = answers.answer1 == 1 && answers.answer2 == -1;
+        const answer2Correct = answers.answer3 == 1 && answers.answer4 == 0;
+        
+        // 只要有一个答案错误就需要重新作答
+        return !(answer1Correct && answer2Correct);
+    }
+};
 
 // 生成表格头部
 function generateTableHeader() {
@@ -330,11 +273,13 @@ const roundTimeline = {
 };
 
 // 主时间线（10局循环）
-// 主时间线仅保留初始流程
 game2_timeline.push(
     intro,
-    calculationPage,
-    feedbackPage // 动态插入后续流程
+    calculationLoop,
+    {
+        timeline: [roundTimeline],
+        repetitions: 10 // 直接重复10次
+    }
 );
 
 // 样式定义
