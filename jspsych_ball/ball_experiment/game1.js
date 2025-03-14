@@ -71,7 +71,7 @@ const intro2 = {
                         (3) 一旦你在某一轮次中<b>做出判断</b>——选择 A 或 B，则本局游戏<b>立刻结束</b>；若选择 C，则进入下一轮。第 ${gameState.maxAttempts}轮时必须做判断，在 A 和 B 之间择一选择。
                     </p>
                     <p> 
-                        (4) 每局结束后，如果<span style="color: red;">判断正确</span>，将<span style="color: red;">获得 1 元</span>；如果<span style="color: red;">判断错误</span>，将<span style="color: red;">失去 1 元</span>。你的收益只取决于判断是否正确，而与做出判断的轮次无关。
+                        (4) 每局结束后，如果<span style="color: rgb(142,27,17);">判断正确</span>，将<span style="color: rgb(142,27,17);">获得 1 元</span>；如果<span style="color: rgb(142,27,17);">判断错误</span>，将<span style="color: rgb(142,27,17);">失去 1 元</span>。你的收益只取决于判断是否正确，而与做出判断的轮次无关。
                     </p> 
                 </div>
                 <!-- img -->
@@ -156,12 +156,13 @@ function createDecisionTrial() {
                 const guess = response.includes('偏白箱') ? '偏白箱' : '偏黑箱';
                 const correct = guess === gameState.boxType;
                 gameState.totalEarnings += correct ? 1 : -1;
-                gameState.currentAttempt = 9; // 强制结束当前局
                 jsPsych.data.addProperties({ 
                     round: gameState.currentRound,
-                    outcome: correct ? '正确' : '错误',
-                    total: gameState.totalEarnings
+                    current_guess: gameState.current_guess,
+                    current_boxType: gameState.boxType,
+                    Coin_sequence: gameState.coinSequence
                 });
+                gameState.currentAttempt = 9; // 强制结束当前局
             } else {
                 gameState.currentAttempt++;
             }
@@ -228,7 +229,7 @@ const tableStyles = `
     .jspsych-survey-multi-choice-prompt { margin-bottom: 20px; }
     .jspsych-survey-multi-choice-option { display: block; margin-bottom: 10px; }
     .jspsych-btn { display: block; margin: -20px 0 0 80px; background-color: rgb(75, 126, 243); color:white; border:none; border-radius:5px; padding:10px 20px; cursosr:pointer; }
-    .jspsych-survey-multi-choice-required::after {content: "" !important; /* 清除星号 */
+    .jspsych-survey-multi-choice-requirgb(142,27,17)::after {content: "" !important; /* 清除星号 */
 }
 `;
 document.head.insertAdjacentHTML('beforeend', `<style>${tableStyles}</style>`);

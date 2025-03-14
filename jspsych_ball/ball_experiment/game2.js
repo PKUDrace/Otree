@@ -5,6 +5,8 @@ const globalAnswers = {
     test_answer3: null,
     test_answer4: null
 };
+
+// 重点：后续使用var来记录数据
 // 状态管理对象
 const gameState = {
     currentRound: 1,
@@ -13,7 +15,9 @@ const gameState = {
     coinSequence: [],
     currentAttempt: 0,
     maxAttempts: 9, // 每局最多进行 9 轮
-    numRounds: 10    // 总共有 10 局
+    numRounds: 10,    // 总共有 10 局
+    guess_attempt: 0,
+    current_guess: ''
 };
 
 // 生成硬币序列函数
@@ -47,12 +51,12 @@ const intro = {
             <br>
             <div style="display: flex; gap: 40px; align-items: flex-start;">
                 <div style="flex: 1;">
-                    <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 元启动资金，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 2 中的收益为${gameState.numRounds}局游戏的累积收益。</p>
-                    <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。<span style="color: red;">在一局游戏中，你和对方看到的信息（从同一个箱中抽出的球）是完全相同的</span>。在整个游戏过程中你们<span style="color: red;">看不到彼此的选择</span>。</p>
+                    <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 元启动资金，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 2 中的收益为${gameState.numRounds}局游戏的累积收益。<span style="font-weight: bold; color: rgb(142,27,17);">这将是你实验报酬的一部分</span></p>
+                    <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。<span style="font-weight: bold;color: rgb(142,27,17);">在一局游戏中，你和对方看到的信息（从同一个箱中抽出的球）是完全相同的</span>。在整个游戏过程中你们<span style="font-weight: bold;color: rgb(142,27,17);">看不到彼此的选择</span>。</p>
                     <p>${gameState.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下规则计算各自<b>每局的收益</b>：</p>
                     <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
                         <li>情况 1：两位玩家<strong>在同一轮次</strong>做出判断，<b>彼此收益互不影响</b>，判断正确者得 1 元，判断错误者失 1 元。</li>
-                        <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
+                        <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方，作答无效，得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
                     </div>
                 </div>
                 <div style="flex: 0 0 auto;">
@@ -67,7 +71,7 @@ const intro = {
     choices: "NO_KEYS",
     on_load: () => document.getElementById('next-button').addEventListener('click', jsPsych.finishTrial)
 };
-
+// 计算页
 const calculationPage = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
@@ -275,15 +279,16 @@ function createDecisionTrial() {
             }
             const response = data.response.Q0;
             if (response.startsWith('A') || response.startsWith('B')) {
-                const guess = response.includes('偏白箱') ? '偏白箱' : '偏黑箱';
-                const correct = guess === gameState.boxType;
-                gameState.totalEarnings += correct ? 1 : -1;
-                gameState.currentAttempt = 9; // 强制结束当前局
+                gameState.current_guess = response.includes('偏白箱') ? '偏白箱' : '偏黑箱';
+                gameState.guess_attempt = gameState.currentAttempt;
+                const correct = gameState.current_guess === gameState.boxType;
                 jsPsych.data.addProperties({ 
                     round: gameState.currentRound,
-                    outcome: correct ? '正确' : '错误',
-                    total: gameState.totalEarnings
+                    current_guess: gameState.current_guess,
+                    current_boxType: gameState.boxType,
+                    Coin_sequence: gameState.coinSequence
                 });
+                gameState.currentAttempt = 9; // 强制结束当前局
             } else {
                 gameState.currentAttempt++;
             }
@@ -295,24 +300,42 @@ function createDecisionTrial() {
 const resultPage = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: () => {
-        const resultText = `你的收益将与相同硬币序列另一位参与者的收益进行比较，正确判断将获得1元，错误判断将失去1元。`;
-        return `
-            <h2>${gameState.currentRound === 10 ? '游戏结束' : '下一局'}</h2>
-            <p>${resultText}</p>
-            <p><b>总收益：${gameState.totalEarnings}元</b></p>
-            <button class="jspsych-btn" style="margin-top: 40px; display: block; margin-left: auto; margin-right: auto;">${gameState.currentRound === 10 ? '完成' : '继续'}</button>
+        let title = gameState.currentRound < gameState.numRounds ? "游戏 2：进行中" : "游戏 2 结束";
+        let content = `
+            <h2>${title}</h2>
+            <br>
+            <p>第 ${gameState.currentRound} 局游戏结果：</p>
+            <p>你在第 ${gameState.guess_attempt+1} 轮做出判断: ${gameState.current_guess}。
+                与你匹配的玩家也在某一轮次做出判断。
+            </p>
         `;
+
+        if (gameState.currentRound < gameState.numRounds) {
+            content += `
+                <p>游戏 2 结束后，系统将比对双方的选择计算你们在游戏 2 中的收益。</p>
+                <br>
+                <button class="game2_result_btn" style="display: block; margin: 0 auto; background-color: rgb(74, 126, 243); color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">下一局</button>
+            `;
+        } else {
+            content += `
+                <p>你在游戏 2 中的收益将在实验结束后公布。</p>
+                <br>
+                <button class="game2_result_btn" style="display: block; margin: 0 auto; background-color: rgb(74, 126, 243); color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">实验结束</button>
+            `;
+        }
+
+        return content;
     },
     choices: "NO_KEYS",
     on_load: () => {
         document.querySelector('button').addEventListener('click', () => {
-            if (gameState.currentRound < 10) {
+            if (gameState.currentRound < gameState.numRounds) {
                 gameState.currentRound++;
                 gameState.currentAttempt = 0; // 重置轮次
                 gameState.boxType = Math.random() < 0.5 ? '偏白箱' : '偏黑箱';
                 gameState.coinSequence = generateCoinSequence(gameState.boxType);
-            }
             jsPsych.finishTrial();
+            };
         });
     }
 };
