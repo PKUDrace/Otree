@@ -30,12 +30,13 @@ const initGameState = {
         gameState.boxType = Math.random() < 0.5 ? '偏白箱' : '偏黑箱';
         gameState.coinSequence = generateCoinSequence(gameState.boxType);
         gameState.currentAttempt = 0; // 重置当前轮次
+        console.log(gameState);
     }
 };
 
 // 介绍页1
 const intro1 = {
-    type: jsPsychHtmlKeyboardResponse,
+    type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="text-align: left; margin: 50px 150px;">
             <h1 style="text-align: left;">游戏 1：游戏总则</h1>
@@ -44,16 +45,14 @@ const intro1 = {
             <img src="img/concept.png" style="width:750px; display: block; margin: 0 auto;">
             <p><b>每局游戏</b>开始时，系统从两个箱子中<b>随机</b>挑选一个。<b>每局最多进行 ${gameState.maxAttempts} 轮游戏</b>。每一轮，系统从本局初被挑中的箱子里抽取一个球，抽球<b>不需要成本</b>。</p>
             <p>每局游戏里，你需要根据当前及之前轮次抽出的所有球<b>推测</b>本局被挑中的<b>是哪个箱子</b>。</p>
-            <button id="next-button" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">下一页</button>
         </div>
     `,
-    choices: "NO_KEYS",
-    on_load: () => document.getElementById('next-button').addEventListener('click', jsPsych.finishTrial)
+    choices: ["下一页"]
 };
 
 // 介绍页2
 const intro2 = {
-    type: jsPsychHtmlKeyboardResponse,
+    type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="text-align: left; margin: 100px 100px;">
             <h1 style="text-align: left;">游戏 1：游戏介绍</h1>
@@ -80,11 +79,9 @@ const intro2 = {
                     style="width:200px; height:350px; display: block; margin: 0 auto;" />
                 </div>
             </div>
-            <button id="start-button" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">开始游戏</button>
         </div>
     `,
-    choices: "NO_KEYS",
-    on_load: () => document.getElementById('start-button').addEventListener('click', jsPsych.finishTrial)
+    choices: ["开始游戏"]
 };
 
 // 生成表格头部
@@ -103,7 +100,7 @@ function generateTableHeader() {
                     } else {
                         bgColor = 'white';
                     }
-                    return `<th style="background-color: ${bgColor};border-collapse: collapse;">${round}</th>`;
+                    return `<th style="background-color: ${bgColor};">${round}</th>`;
                 }).join('')}
             </tr>
         </thead>
@@ -156,12 +153,14 @@ function createDecisionTrial() {
                 const guess = response.includes('偏白箱') ? '偏白箱' : '偏黑箱';
                 const correct = guess === gameState.boxType;
                 gameState.totalEarnings += correct ? 1 : -1;
-                jsPsych.data.addProperties({ 
-                    round: gameState.currentRound,
-                    current_guess: gameState.current_guess,
-                    current_boxType: gameState.boxType,
-                    Coin_sequence: gameState.coinSequence
-                });
+                //结果记录
+                data.game1_round = gameState.currentRound
+                data.game1_participant_guess = guess
+                data.game1_boxType = gameState.boxType
+                data.game1_isCorrect = correct ? 1:0
+                data.game1_result = correct ? 1:-1
+                data.game1_attemptNum = gameState.currentAttempt + 1
+                data.game1_Coin_sequence = gameState.coinSequence
                 gameState.currentAttempt = 9; // 强制结束当前局
             } else {
                 gameState.currentAttempt++;
@@ -173,7 +172,7 @@ function createDecisionTrial() {
 
 // 结果页
 const resultPage = {
-    type: jsPsychHtmlKeyboardResponse,
+    type: jsPsychHtmlButtonResponse,
     stimulus: () => {
         const lastTrialData = jsPsych.data.get().last(1).values()[0];
         const guess = lastTrialData.response.Q0.includes('偏白箱') ? '偏白箱' : '偏黑箱';
@@ -183,21 +182,15 @@ const resultPage = {
             <h2>${gameState.currentRound === 5 ? '游戏结束' : '下一局'}</h2>
             <p>${resultText}</p>
             <p><b>总收益：${gameState.totalEarnings}元</b></p>
-            <button class="jspsych-btn" style="margin-top: 40px; display: block; margin-left: auto; margin-right: auto;">${gameState.currentRound === 5 ? '完成' : '继续'}</button>
         `;
     },
-    choices: "NO_KEYS",
+    choices: () => {
+        return gameState.currentRound === 5 ? ['完成'] : ['继续']
+    },
     on_load: () => {
-        document.querySelector('button').addEventListener('click', () => {
             if (gameState.currentRound < 5) {
                 gameState.currentRound++;
-                gameState.currentAttempt = 0; // 重置轮次
-                gameState.boxType = Math.random() < 0.5 ? '偏白箱' : '偏黑箱';
-                gameState.coinSequence = generateCoinSequence(gameState.boxType);
-            }
-            jsPsych.finishTrial();
-        });
-    }
+            }}
 };
 
 // 单局时间线（严格循环控制）
@@ -212,15 +205,31 @@ const roundTimeline = {
     ]
 };
 
+//结束语
+let game1_end = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <h3 style="margin-bottom:30px">游戏1️⃣已全部完成</h3>
+      `,
+    choices: ['继续'],
+    on_finish:(data)=>{
+        data.totalEarnings = gameState.totalEarnings
+
+    }
+};
+
 // 主时间线（5局循环）
 game1_timeline.push(
     intro1,
-    intro2,
-    {
-        timeline: [roundTimeline],
-        repetitions: 5 // 直接重复5次
-    }
+    intro2
 );
+
+for(i = 0; i < 5; i++){
+    game1_timeline.push(roundTimeline)
+}
+
+game1_timeline.push(game1_end)
+
 
 // 样式定义
 const tableStyles = `
