@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>竞争性假设检验实验</title>
+
+  <script type="text/javascript" src="./jsPsych/jspsych.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-html-keyboard-response.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-html-button-response.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-image-keyboard-response.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-fullscreen.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-preload.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-instructions.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-survey.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-survey-text.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-survey-html-form.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-survey-likert.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-survey-multi-choice.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-survey-multi-select.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-html-slider-response.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-image-slider-response.js"></script>
+  <script type="text/javascript" src="./jsPsych/plugin-call-function.js"></script>
+  <script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="./js/utils.js"></script>
+  <script src="/jspsych/static/credamo-jspsych.min.js"></script>
+  <!-- <script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script> -->
+  <link rel="stylesheet" href="./style/jspsych.css" type="text/css">
+  <link rel="stylesheet" href="./style/index.css" type="text/css">
+  <style>
+    /* 自定义样式 */
+    .centered-list {
+      display: flex;
+      justify-content: center;
+    }
+
+    .centered-list ul {
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body></body>
+
+<script src="intro.js"></script>
+<script src="survey1_v2.js"></script>
+<script src="survey2.js"></script>
+<script src="survey3.js"></script>
+<script src="game1.js"></script>
+<script src="game2.js"></script>
+
+<script>
+
+
+
+  const jsPsych = initJsPsych({
+    on_finish: function () {
+      // 自定义保存方法
+      const data = jsPsych.data.get().csv();
+      const bom = new Uint8Array([0xEF, 0xBB, 0xBF]); // UTF-8 BOM头
+      const blob = new Blob([bom, data], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'experiment_data.csv';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  });
+
+  //全屏
+  let enter_fullscreen = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: true,
+    message: `
+    <div style="margin-bottom:20px">请点击下方按钮进入全屏模式进行实验</div>
+    <div style="margin-bottom:20px">实验过程中切勿离开全屏模式</div>
+    `,
+    button_label: '进入全屏'
+  }
+
+  //离开全屏
+  let exit_fullscreen = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: false
+  }
+
+  //游戏二加载
+  let loadGame2 = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `<h3 style="color=red">请稍等，游戏2️⃣正在飞速加载中...</h3>`,
+    trial_duration: function () {
+      // return Math.floor(Math.random() * (2000 - 500 + 1)) + 500;
+      return 10000
+    },
+    response_ends_trial: false,
+    choices: "NO_KEYS",
+    on_load: function () {
+      beforeFind()
+      generateUserId()
+      afterInsert(uId)
+    }
+  }
+
+  // 创建实验结果页面的试验
+  const end = {
+    type: jsPsychSurveyHtmlForm,
+    preamble: '<h1 style="font-size: 24px; margin-bottom: 20px; text-align: left;">实验结果</h1>',
+    html: () => `
+            <div style="text-align: left; background-color: white; padding: 0 20px; border-radius: 5px;">
+                <p style="margin-bottom: 15px; line-height: 1.5;">您在游戏1的报酬为${gameState.totalEarnings}元，游戏2的报酬将与另一位玩家的数据比对后追付差额。</p>
+                <p style="margin-bottom: 15px; line-height: 1.5;">请您留意后续通知</p>
+                
+                <div style="margin: 20px 0;">
+                    <p style="margin-bottom: 15px; line-height: 1.5;">本次实验报酬的转账方式，你选择哪一个？</p>
+                    
+                    <div style="display: flex; align-items: center; margin: 10px 0;">
+                        <input type="radio" id="option1" name="payment_option" value="currentMonth" style="margin-right: 10px;">
+                        <label for="option1" style="font-weight: normal;">本月获得实验报酬</label>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; margin: 10px 0;">
+                        <input type="radio" id="option2" name="payment_option" value="nextMonth" style="margin-right: 10px;">
+                        <label for="option2" style="font-weight: normal;">下个月获得实验报酬 + 额外2元</label>
+                    </div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <p style="margin-bottom: 10px; line-height: 1.5;">请描述你关于本实验的感受或建议：</p>
+                    <textarea id="feedback" name="feedback" style="width: 100%; height: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; font-size: inherit;"></textarea>
+                </div>
+            </div>
+        `,
+    button_label: '提交',
+    button_html: '<button type="submit" style="background-color: #1E90FF; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-top: 20px;">%choice%</button>',
+    on_finish: function (data) {
+      jsPsych.data.addProperties({
+        payDay: data.response.payment_option,
+        comment: data.response.feedback,
+        uId: uId,
+        gId: gId
+      });
+      onCredamoEndTrialFinish(jsPsych.data.get().csv())
+      alert(`实验已全部结束，感谢参与，祝您生活愉快:)`);
+    }
+  };
+
+  //   //结束语
+  // let end = {
+  //     type: jsPsychHtmlButtonResponse,
+  //     stimulus: `
+  //       <h2 > 实验已完成，辛苦了☕</h2>
+  //         <div class="mb20">
+  //             <div class="mb20">非常感谢您在百忙之中抽出时间参与我们的心理学实验。</div>
+  //             <div class="mb20">您的参与对于我们的研究具有不可估量的价值。</div>
+  //             <div class="mb20">通过您在实验中的表现，我们获得了珍贵的数据，这些数据将为心理学的发展添砖加瓦。</div>
+  //             <div class="mb20"> 如果您对实验有任何疑问或者建议，随时与我们交流，您的反馈对我们至关重要。</div>
+  //             <div class="mb20">再次向您表示最诚挚的感谢！愿您的生活充满阳光，幸福安康 :)</div>
+  //       </div>`,
+  //     choices: ['结束']
+  // };
+
+  // 定义时间线
+  let timeline = [];
+
+  //引入各部分的时间线
+  timeline = timeline.concat(enter_fullscreen);
+  timeline = timeline.concat(intro_timeline);
+  timeline = timeline.concat(survey1_timeline);
+  timeline = timeline.concat(survey2_timeline);
+  timeline = timeline.concat(survey3_timeline);
+  timeline = timeline.concat(game1_timeline);
+  timeline = timeline.concat(loadGame2)
+  timeline = timeline.concat(game2_timeline)
+
+
+
+
+  // 运行实验
+  jsPsych.run(timeline);
+</script>
+
+</html>

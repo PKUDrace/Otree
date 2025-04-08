@@ -1,7 +1,7 @@
 const survey2_timeline = [];
 
 const survey2HTML = `
-<div class="survey2-container" style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: left;">
+<div class="survey2-container" style="max-width: 800px; margin: 0 auto; padding: 20px; text-align: left;">
     <h3 style="text-align:center;">问卷2</h3>
     <p>有6枚硬币（如下表），每一枚硬币投掷出正反面的概率都是50%。每一枚硬币的正面、反面各有一个面值。你可以选择抛掷任何一枚硬币，并根据掷出的是正面还是反面获得相应的面值。</p>
     <table style="border-collapse: collapse; width: 80%; margin: 0 auto;">
@@ -71,8 +71,15 @@ const survey2HTML = `
         border-radius: 5px;
         padding: 10px 20px;
         cursor: pointer;
-        margin: 0 auto; /* 添加居中对齐 */
-        display: block; /* 使按钮成为块级元素 */
+        margin: 0 auto;
+        display: block;
+    }
+    .survey2-container input[type="radio"] {
+        margin-right: 5px;
+    }
+    .survey2-container div > label {
+        display: inline-block; /* 使选项横向排列 */
+        margin-right: 15px; /* 添加选项间距 */
     }
 </style>
 `;

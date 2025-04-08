@@ -1,7 +1,7 @@
 const survey3_timeline = [];
 
 const survey3HTML = `
-<div class="survey3-container" style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: left;">
+<div class="survey3-container" style="max-width: 800px; margin: 0 auto; padding: 20px; text-align: left;">
 
     <h3>问卷3</h3>
     <p><b>请完成下面 8 组问题。</b></p>

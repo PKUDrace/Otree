@@ -13,7 +13,7 @@ const globalAnswers = {
 // 状态管理对象
 const game2State = {
     currentRound: 1,
-    totalEarnings: 10, // 初始资金
+    totalEarnings: 500, // 初始资金
     boxType: '',
     coinSequence: [],
     currentAttempt: 0,
@@ -55,12 +55,12 @@ const intro_game2 = {
             <br>
             <div style="display: flex; gap: 40px; align-items: flex-start;">
                 <div style="flex: 1;">
-                    <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 元启动资金，游戏共进行 <strong>${game2State.numRounds}</strong> 局，你在游戏 2 中的收益为${game2State.numRounds}局游戏的累积收益。<span style="font-weight: bold; color: rgb(142,27,17);">这将是你实验报酬的一部分</span></p>
-                    <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。<span style="font-weight: bold;color: rgb(142,27,17);">在一局游戏中，你和对方看到的信息（从同一个箱中抽出的球）是完全相同的</span>。在整个游戏过程中你们<span style="font-weight: bold;color: rgb(142,27,17);">看不到彼此的选择</span>。</p>
+                    <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 初始积分，游戏共进行 <strong>${game2State.numRounds}</strong> 局，你在游戏 2 中的收益为${game2State.numRounds}局游戏的累积收益。<span style="font-weight: bold; color: rgb(142,27,17);">这将是你实验报酬的一部分</span></p>
+                    <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。<span style="font-weight: bold;color: rgb(142,27,17);">在一局游戏中，你和对方面对的箱子和看到的信息（从同一个箱中抽出的球）是完全一样的</span>。在整个游戏过程中你们<span style="font-weight: bold;color: rgb(142,27,17);">看不到彼此的选择</span>。</p>
                     <p>${game2State.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下规则计算各自<b>每局的收益</b>：</p>
                     <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
-                        <li>情况 1：两位玩家<strong>在同一轮次</strong>做出判断，<b>彼此收益互不影响</b>，判断正确者得 1 元，判断错误者失 1 元。</li>
-                        <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方，作答无效，得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
+                        <li>情况 1：两位玩家<strong>在同一轮次</strong>做出判断，<b>彼此收益互不影响</b>，判断正确者得 50 积分，判断错误者失 50 积分。</li>
+                        <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方，作答无效，得 0 积分</b>；轮次早的一方，判断正确得 50 元，判断错误失 50 积分。</li>
                     </div>
                 </div>
                 <div style="flex: 0 0 auto;">
@@ -86,18 +86,18 @@ const calculationPage = {
 
                 1.请选择玩家 1 在该局游戏中的收益。</p>
                 <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer1" value="-1"> -1</label><br>
+                    <label><input type="radio" name="test_answer1" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer1" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer1" value="1"> +1</label><br>
+                    <label><input type="radio" name="test_answer1" value="1"> +50</label><br>
                 </div>
             </div>
 
             <div>
                 <p>2.请选择玩家 2 在该局游戏中的收益。</p>
                 <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer2" value="-1"> -1</label><br>
+                    <label><input type="radio" name="test_answer2" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer2" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer2" value="1"> +1</label><br>
+                    <label><input type="radio" name="test_answer2" value="1"> +50</label><br>
                 </div>
             </div>
             <br>
@@ -106,17 +106,17 @@ const calculationPage = {
                 <p>在游戏 2 的某一局中，玩家 1 在<b>第 1 轮</b>作答，选择了<b>“A. 这是偏白箱”</b>，玩家 2 在<b>第 9 轮</b>作答，选择了<b>“B. 这是偏黑箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏黑箱</b>，请选择两位玩家在该局游戏中的收益。
                 </p>3.请选择玩家 1 在该局游戏的收益：</p>
                 <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer3" value="-1"> -1</label><br>
+                    <label><input type="radio" name="test_answer3" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer3" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer3" value="1"> +1</label><br>
+                    <label><input type="radio" name="test_answer3" value="1"> +50</label><br>
                 </div>
             </div>
             <div>
                 <p>4. 请选择玩家 2 在该局游戏的收益：</p>
                 <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer4" value="-1"> -1</label><br>
+                    <label><input type="radio" name="test_answer4" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer4" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer4" value="1"> +1</label><br>
+                    <label><input type="radio" name="test_answer4" value="1"> +50</label><br>
                 </div>
             </div>
             <button id="submit-button" class="btn btn-primary" style="margin:30px 0;padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">提交</button>
@@ -163,11 +163,9 @@ const feedbackPage = {
                 <br>
                 <p>
                     第 1 题回答<b> ${feedback1}</b>。<br>
-                    计算思路：这一局中两位玩家在同一轮次（第 9 轮）作答，彼此收益互不影响；双方都选择了“A. 这是偏白箱”，均判断正确得 1 元。
                 </p>
                 <p>
                     第 2 题回答<b> ${feedback2}</b>。<br>
-                    计算思路：这一局中玩家 2 的作答轮次（第 9 轮）晚于玩家 1（第 1 轮），因此所做判断无效得 0 元；而玩家 1 判断错误损失 1 元。
                 </p>
                 <br>
                 游戏 2 <b>每局收益</b>的计算规则如下：
@@ -342,7 +340,7 @@ let game2_end = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
       <h3 style="margin-bottom:30px">游戏2️⃣已全部完成</h3></br>
-      <h3 style="margin-bottom:30px">正在快速计算得分中，请稍等片刻，切勿关闭浏览器...</h3>
+      <h3 style="margin-bottom:30px">您在游戏2中的收益将与另一位玩家比对后确定，我们将尽快确认并向您追付额外报酬，请关注项目的后续通知！</h3>
       `,
       trial_duration: function () {
         // return Math.floor(Math.random() * (2000 - 500 + 1)) + 500;
