@@ -11,7 +11,7 @@ const globalAnswers = {
 // 状态管理对象
 const game2State = {
     currentRound: 1,
-    totalEarnings: 10, // 初始资金
+    totalEarnings: 500, // 初始资金
     boxType: '',
     coinSequence: [],
     currentAttempt: 0,
@@ -55,12 +55,12 @@ const intro_game2 = {
             <br>
             <div style="display: flex; gap: 40px; align-items: flex-start;">
                 <div style="flex: 1;">
-                    <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 元启动资金，游戏共进行 <strong>${game2State.numRounds}</strong> 局，你在游戏 2 中的收益为${game2State.numRounds}局游戏的累积收益。<span style="font-weight: bold; color: rgb(142,27,17);">这将是你实验报酬的一部分</span></p>
-                    <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。<span style="font-weight: bold;color: rgb(142,27,17);">在一局游戏中，你和对方看到的信息（从同一个箱中抽出的球）是完全相同的</span>。在整个游戏过程中你们<span style="font-weight: bold;color: rgb(142,27,17);">看不到彼此的选择</span>。</p>
+                    <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 起始积分，游戏共进行 <strong>${game2State.numRounds}</strong> 局，你在游戏 2 中的收益为${game2State.numRounds}局游戏的累积收益，并按照 <span style="font-weight: bold; color: rgb(142,27,17);">100积分 = 1元</span> 的方式折合为你的额外报酬。</p>
+                    <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。每局游戏开始前，将随机从两个箱子中<span style="font-weight: bold;color: rgb(142,27,17);">抽取一个供你和对手抢答判断，每一轮展示给你们的球是一样的。</span>在整个游戏过程中你们<span style="font-weight: bold;color: rgb(142,27,17);">看不到彼此的选择</span>。</p>
                     <p>${game2State.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下规则计算各自<b>每局的收益</b>：</p>
                     <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
-                        <li>情况 1：两位玩家<strong>在同一轮次</strong>做出判断，<b>彼此收益互不影响</b>，判断正确者得 1 元，判断错误者失 1 元。</li>
-                        <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方，作答无效，得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
+                        <li>情况 1：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在同一轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">彼此收益互不影响</span>，判断正确者加 50 分，判断错误者减 50 分。</li>
+                        <li>情况 2：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在不同轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">作答轮次晚的一方，作答无效，得 0 分</span>；轮次早的一方，判断正确加 50 分，判断错误加 50 分。</li>
                     </div>
                 </div>
                 <div style="flex: 0 0 auto;">
@@ -85,38 +85,37 @@ const calculationPage = {
                 ，请选择两位玩家在该局游戏中的收益。<br>
 
                 1.请选择玩家 1 在该局游戏中的收益。</p>
-                <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer1" value="-1"> -1</label><br>
+                <div style="display: flex; gap: 10px; margin-top: 5px;"> <!-- 增加 margin-top -->
+                    <label><input type="radio" name="test_answer1" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer1" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer1" value="1"> +1</label><br>
+                    <label><input type="radio" name="test_answer1" value="1"> +50</label><br>
                 </div>
             </div>
 
             <div>
                 <p>2.请选择玩家 2 在该局游戏中的收益。</p>
-                <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer2" value="-1"> -1</label><br>
+                <div style="display: flex; gap: 10px; margin-top: 5px;"> <!-- 增加 margin-top -->
+                    <label><input type="radio" name="test_answer2" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer2" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer2" value="1"> +1</label><br>
+                    <label><input type="radio" name="test_answer2" value="1"> +50</label><br>
                 </div>
             </div>
-            <br>
             <!-- 题目 3 -->
             <div>
                 <p>在游戏 2 的某一局中，玩家 1 在<b>第 1 轮</b>作答，选择了<b>“A. 这是偏白箱”</b>，玩家 2 在<b>第 9 轮</b>作答，选择了<b>“B. 这是偏黑箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏黑箱</b>，请选择两位玩家在该局游戏中的收益。
                 </p>3.请选择玩家 1 在该局游戏的收益：</p>
-                <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer3" value="-1"> -1</label><br>
+                <div style="display: flex; gap: 10px;margin-top: 5px;">
+                    <label><input type="radio" name="test_answer3" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer3" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer3" value="1"> +1</label><br>
+                    <label><input type="radio" name="test_answer3" value="1"> +50</label><br>
                 </div>
             </div>
             <div>
                 <p>4. 请选择玩家 2 在该局游戏的收益：</p>
-                <div style="display: flex; gap: 10px;">
-                    <label><input type="radio" name="test_answer4" value="-1"> -1</label><br>
+                <div style="display: flex; gap: 10px;margin-top: 5px;">
+                    <label><input type="radio" name="test_answer4" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer4" value="0"> 0</label><br>
-                    <label><input type="radio" name="test_answer4" value="1"> +1</label><br>
+                    <label><input type="radio" name="test_answer4" value="1"> +50</label><br>
                 </div>
             </div>
             <button id="submit-button" class="btn btn-primary" style="margin:30px 0;padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">提交</button>
@@ -163,17 +162,15 @@ const feedbackPage = {
                 <br>
                 <p>
                     第 1 题回答<b> ${feedback1}</b>。<br>
-                    计算思路：这一局中两位玩家在同一轮次（第 9 轮）作答，彼此收益互不影响；双方都选择了“A. 这是偏白箱”，均判断正确得 1 元。
                 </p>
                 <p>
                     第 2 题回答<b> ${feedback2}</b>。<br>
-                    计算思路：这一局中玩家 2 的作答轮次（第 9 轮）晚于玩家 1（第 1 轮），因此所做判断无效得 0 元；而玩家 1 判断错误损失 1 元。
                 </p>
                 <br>
-                游戏 2 <b>每局收益</b>的计算规则如下：
-                <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
-                    <li>情况 1：两位玩家<strong>在同一轮次</strong>做出判断，<b>彼此收益互不影响</b>，判断正确者得 1 元，判断错误者失 1 元。</li>
-                    <li>情况 2：两位玩家<strong>在不同轮次</strong>做出判断，<b>作答轮次晚的一方得 0 元</b>；轮次早的一方，判断正确得 1 元，判断错误失 1 元。</li>
+                若回答不正确，请再次阅读游戏2的<b>每局收益</b>的计算规则，完全理解后点击重新测试，再次尝试作答：
+                <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;text-align: left;max-width: 1150px; margin: 0 auto;">
+                    <li>情况 1：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在同一轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">彼此收益互不影响</span>，判断正确者加 50 分，判断错误者减 50 分。</li>
+                        <li>情况 2：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在不同轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">作答轮次晚的一方，作答无效，得 0 分</span>；轮次早的一方，判断正确加 50 分，判断错误加 50 分。</li>
                 </div>
                 <br>
                 <button id="feedback-button" data-correct="${allCorrect}" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">${buttonText}</button>
@@ -211,7 +208,6 @@ const feedbackPage = {
         });
     }
 };
-
 
 // 生成表格头部
 function generateTableHeader() {
@@ -314,13 +310,13 @@ const resultPage_game2 = {
 
         if (game2State.currentRound < game2State.numRounds) {
             content += `
-                <p>游戏 2 结束后，系统将比对双方的选择计算你们在游戏 2 中的收益。</p>
+                <p>游戏 2 结束后，系统将比对双方的选择计算你们在游戏 2 中的收益，之后追付额外报酬。</p>
                 <br>
             `;
             resultBtn = "下一局"
         } else {
             content += `
-                <p>你在游戏 2 中的收益将在实验结束后公布。</p>
+                <p>你在游戏 2 中的收益将在实验结束，系统比对后追付。</p>
                 <br>
             `;
             resultBtn = "实验结束"
@@ -342,6 +338,7 @@ let game2_end = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
       <h3 style="margin-bottom:30px">游戏2️⃣已全部完成</h3>
+      <h3 style="margin-bottom:30px">系统将比对双方的选择计算收益，之后向您追付额外报酬，请留意后续通知。</h3></br>
       `,
     choices: ['继续']
 };

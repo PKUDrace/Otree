@@ -11,11 +11,11 @@ const survey3HTML = `
             <div class="option-group">
                 <label>
                     <input type="radio" name="choice1" value="A" required>
-                    <span style="width:95%">你有<b>63%</b>的概率获得100元，有<b>37%</b>的概率获得0元。</span>
+                    <span style="width:95%">你有<span style="font-weight: bold;color: rgb(142,27,17);">63%</span>的概率获得100元，有<span style="font-weight: bold;color: rgb(142,27,17);">37%</span>的概率获得0元。</span>
                 </label><br>
                 <label>
                     <input type="radio" name="choice1" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>低于</b>300点，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>300点，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -26,11 +26,11 @@ const survey3HTML = `
             <div class="option-group">
                 <label>
                     <input type="radio" name="choice2" value="A" required>
-                    <span style="width:95%">你有<b>50%</b>的概率获得100元，有<b>50%</b>的概率获得0元。</span>
+                    <span style="width:95%">你有<span style="font-weight: bold;color: rgb(142,27,17);">50%</span>的概率获得100元，有<span style="font-weight: bold;color: rgb(142,27,17);">50%</span>的概率获得0元。</span>
                 </label><br>
                 <label>
                     <input type="radio" name="choice2" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>低于</b>300点，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>300点，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -41,11 +41,11 @@ const survey3HTML = `
             <div class="option-group">
                 <label>
                     <input type="radio" name="choice3" value="A" required>
-                    <span style="width:95%">你有<b>25%</b>的概率获得100元，有<b>75%</b>的概率获得0元。</span>
+                    <span style="width:95%">你有<span style="font-weight: bold;color: rgb(142,27,17);">25%</span>的概率获得100元，有<span style="font-weight: bold;color: rgb(142,27,17);">75%</span>的概率获得0元。</span>
                 </label><br>
                 <label>
                     <input type="radio" name="choice3" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>低于</b>300点，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>300点，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -56,11 +56,11 @@ const survey3HTML = `
             <div class="option-group">
                 <label>
                     <input type="radio" name="choice4" value="A" required>
-                    <span style="width:95%">你有<b>10%</b>的概率获得100元，有<b>90%</b>的概率获得0元。</span>
+                    <span style="width:95%">你有<span style="font-weight: bold;color: rgb(142,27,17);">10%</span>的概率获得100元，有<span style="font-weight: bold;color: rgb(142,27,17);">90%</span>的概率获得0元。</span>
                 </label><br>
                 <label>
                     <input type="radio" name="choice4" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>低于</b>300点，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>300点，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -71,11 +71,11 @@ const survey3HTML = `
             <div class="option-group">
                 <label>
                     <input type="radio" name="choice5" value="A" required>
-                    <span style="width:95%">你有<b>37%</b>的概率获得100元，有<b>63%</b>的概率获得0元。</span>
+                    <span style="width:95%">你有<span style="font-weight: bold;color: rgb(142,27,17);">37%</span>的概率获得100元，有<span style="font-weight: bold;color: rgb(142,27,17);">63%</span>的概率获得0元。</span>
                 </label><br>
                 <label>
                     <input type="radio" name="choice5" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>高于或等于</b>300点，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>300点，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -86,11 +86,11 @@ const survey3HTML = `
             <div class="option-group">
                 <label>
                     <input type="radio" name="choice6" value="A" required>
-                    <span style="width:95%">你有<b>50%</b>的概率获得100元，有<b>50%</b>的概率获得0元。</span>
+                    <span style="width:95%">你有<span style="font-weight: bold;color: rgb(142,27,17);">50%</span>的概率获得100元，有<span style="font-weight: bold;color: rgb(142,27,17);">50%</span>的概率获得0元。</span>
                 </label><br>
                 <label>
                     <input type="radio" name="choice6" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>高于或等于</b>300点，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>300点，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -101,11 +101,11 @@ const survey3HTML = `
             <div class="option-group">
                 <label>
                     <input type="radio" name="choice7" value="A" required>
-                    <span style="width:95%">你有<b>75%</b>的概率获得100元，有<b>25%</b>的概率获得0元。</span>
+                    <span style="width:95%">你有<span style="font-weight: bold;color: rgb(142,27,17);">75%</span>的概率获得100元，有<span style="font-weight: bold;color: rgb(142,27,17);">25%</span>的概率获得0元。</span>
                 </label><br>
                 <label>
                     <input type="radio" name="choice7" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>高于或等于</b>300点，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>300点，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -116,11 +116,11 @@ const survey3HTML = `
             <div class="option-group">
                 <label>
                     <input type="radio" name="choice8" value="A" required>
-                    <span style="width:95%">你有<b>90%</b>的概率获得100元，有<b>10%</b>的概率获得0元。</span>
+                    <span style="width:95%">你有<span style="font-weight: bold;color: rgb(142,27,17);">90%</span>的概率获得100元，有<span style="font-weight: bold;color: rgb(142,27,17);">10%</span>的概率获得0元。</span>
                 </label><br>
                 <label>
                     <input type="radio" name="choice8" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<b>高于或等于</b>300点，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国股票-道琼斯指数与今日收盘相比，波动幅度<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>300点，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>

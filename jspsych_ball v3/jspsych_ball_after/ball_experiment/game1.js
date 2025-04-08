@@ -3,7 +3,7 @@ const game1_timeline = [];
 // 状态管理对象
 const gameState = {
     currentRound: 1,
-    totalEarnings: 5,
+    totalEarnings: 250,
     boxType: '',
     coinSequence: [],
     currentAttempt: 0,
@@ -43,13 +43,14 @@ const intro1 = {
             <br>
             <p>本游戏有<b>两个</b>箱子：“<b>偏白箱</b>”和“<b>偏黑箱</b>”。偏白箱中抽出白球的概率更高，偏黑箱中抽出黑球的概率更高。具体概率如下图：</p>
             <img src="img/concept.png" style="width:750px; display: block; margin: 0 auto;">
-            <p><b>每局游戏</b>开始时，系统从两个箱子中<b>随机</b>挑选一个。<b>每局最多进行 ${gameState.maxAttempts} 轮游戏</b>。每一轮，系统从本局初被挑中的箱子里抽取一个球，抽球<b>不需要成本</b>。</p>
-            <p>每局游戏里，你需要根据当前及之前轮次抽出的所有球<b>推测</b>本局被挑中的<b>是哪个箱子</b>。</p>
+            <p><b>每局游戏</b>开始时，系统从两个箱子中<b>随机</b>挑选一个。<b>每局最多进行 ${gameState.maxAttempts} 轮游戏</b>。每一轮，系统从本局初被挑中的箱子里抽取一个球<b>展示后放回</b>，抽球<b>不需要成本</b>。</p>
+            <p>每局游戏里，你需要根据所有展示出的球<b>推测</b>本局开始时被挑中的<b>是哪个箱子</b>。</p>
         </div>
     `,
     choices: ["下一页"]
 };
 
+// 介绍页2
 // 介绍页2
 const intro2 = {
     type: jsPsychHtmlButtonResponse,
@@ -58,19 +59,19 @@ const intro2 = {
             <h1 style="text-align: left;">游戏 1：游戏介绍</h1>
             <div style="display:flex;align-items:center">
                 <div style="flex:4">
-                    <p>本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 元启动资金，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 1 中的收益为 ${gameState.numRounds}局游戏的累积收益。<b>每局游戏具体规则如下：</b></p>
+                    <p>在两个游戏中，<span style="font-weight: bold;color: rgb(142,27,17);">每100积分等同于1元的额外报酬</span>，我们将在实验结束后根据实际表现向您另行追付。本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 起始积分，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 1 中的总积分为${gameState.numRounds}局游戏的累积积分。<b>每局游戏具体规则如下：</b></p>
 
                     <p>
-                        (1) 每局开始时，系统随机挑选⼀个箱子，按右图规律从箱中抽球 (后续页面也会展示该规律)。
+                        (1) 每局开始时，系统从两个箱子中随机挑选⼀个，按右图规律从箱中抽球展示 (后续页面也会展示该规律)。
                     </p>
                     <p>
-                        (2) 每局最多进行 <b>${gameState.maxAttempts}</b> 轮。每轮中，你会看到当前和之前轮次中抽出的所有球，并在三个选项中择一选择：<b>A</b>. 这是偏白箱；<b>B</b>. 这是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
+                        (2) 每局最多进行 <b>${gameState.maxAttempts}</b> 轮。每轮中，你会看到当前和之前轮次中抽出展示的所有球，并在三个选项中择一选择：<b>A</b>. 这是偏白箱；<b>B</b>. 这是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
                     </p> 
                     <p>
                         (3) 一旦你在某一轮次中<b>做出判断</b>——选择 A 或 B，则本局游戏<b>立刻结束</b>；若选择 C，则进入下一轮。第 ${gameState.maxAttempts}轮时必须做判断，在 A 和 B 之间择一选择。
                     </p>
                     <p> 
-                        (4) 每局结束后，如果<span style="color: rgb(142,27,17);">判断正确</span>，将<span style="color: rgb(142,27,17);">获得 1 元</span>；如果<span style="color: rgb(142,27,17);">判断错误</span>，将<span style="color: rgb(142,27,17);">失去 1 元</span>。你的收益只取决于判断是否正确，而与做出判断的轮次无关。
+                        (4) 每局结束后，如果<span style="font-weight: bold;color: rgb(142,27,17);">判断正确</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">获得 50 积分</span>；如果<span style="font-weight: bold;color: rgb(142,27,17);">判断错误</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">失去 50 积分</span>。你的<b>收益只取决于判断是否正确</b>，而与做出判断的<b>轮次无关</b>。
                     </p> 
                 </div>
                 <!-- img -->
@@ -152,7 +153,7 @@ function createDecisionTrial() {
             if (response.startsWith('A') || response.startsWith('B')) {
                 const guess = response.includes('偏白箱') ? '偏白箱' : '偏黑箱';
                 const correct = guess === gameState.boxType;
-                gameState.totalEarnings += correct ? 1 : -1;
+                gameState.totalEarnings += correct ? 50 : -50;
                 //结果记录
                 data.game1_round = gameState.currentRound
                 data.game1_participant_guess = guess
@@ -170,18 +171,17 @@ function createDecisionTrial() {
 }
 
 
-// 结果页
 const resultPage = {
     type: jsPsychHtmlButtonResponse,
     stimulus: () => {
         const lastTrialData = jsPsych.data.get().last(1).values()[0];
         const guess = lastTrialData.response.Q0.includes('偏白箱') ? '偏白箱' : '偏黑箱';
         const correct = guess === gameState.boxType;
-        const resultText = `你的判断是：“这是${guess}”，判断结果：<b>“${correct ? '正确' : '错误'}”</b>，收益${correct ? '+1' : '-1'}`;
+        const resultText = `你的判断是：“这是${guess}”，判断结果：<b>“${correct ? '正确' : '错误'}”</b>，积分${correct ? '+50' : '-50'}`;
         return `
             <h2>${gameState.currentRound === 5 ? '游戏结束' : '下一局'}</h2>
             <p>${resultText}</p>
-            <p><b>总收益：${gameState.totalEarnings}元</b></p>
+            <p><b>总积分：${gameState.totalEarnings}</b></p>
         `;
     },
     choices: () => {
@@ -232,7 +232,7 @@ game1_timeline.push(game1_end)
 
 // 样式定义
 const tableStyles = `
-    .game-table td { min-width: 50px; height: 50px; font-size: 20px; }
+    .game-table td { min-width: 90px; height: 70px; font-size: 24px; }
     .game-table th, .game-table td { border: 1px solid black; text-align: center; }
     .jspsych-survey-multi-choice-prompt { margin-bottom: 20px; }
     .jspsych-survey-multi-choice-option { display: block; margin-bottom: 10px; }
