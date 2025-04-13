@@ -39,12 +39,13 @@ const intro1 = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="text-align: left; margin: 50px 150px;">
-            <h1 style="text-align: left;">游戏 1：游戏总则</h1>
+            <h2 style="text-align: left;">游戏报酬规则介绍</h2>
             <br>
-            <p>本游戏有<b>两个</b>箱子：“<b>偏白箱</b>”和“<b>偏黑箱</b>”。偏白箱中抽出白球的概率更高，偏黑箱中抽出黑球的概率更高。具体概率如下图：</p>
-            <img src="img/concept.png" style="width:750px; display: block; margin: 0 auto;">
-            <p><b>每局游戏</b>开始时，系统从两个箱子中<b>随机</b>挑选一个。<b>每局最多进行 ${gameState.maxAttempts} 轮游戏</b>。每一轮，系统从本局初被挑中的箱子里抽取一个球<b>展示后放回</b>，抽球<b>不需要成本</b>。</p>
-            <p>每局游戏里，你需要根据所有展示出的球<b>推测</b>本局开始时被挑中的<b>是哪个箱子</b>。</p>
+            <p>欢迎进入主实验！</p>
+            <p>接下来你将面对<b>两个决策游戏</b>，并根据在游戏中的表现获得积分，其中<span style="font-weight: bold;color: rgb(142,27,17);">每 100 积分等同于 1 元的额外报酬</span>。</p>
+
+            <p>我们将在实验结束后，根据实际的得分情况，通过另一个项目向你<span style="font-weight: bold;color: rgb(142,27,17);">另行追付这些额外报酬</span>。</p>
+            <p>预计<b> 10 个工作日左右</b>到账，请你关注后续通知。</p>
         </div>
     `,
     choices: ["下一页"]
@@ -55,21 +56,19 @@ const intro2 = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="text-align: left; margin: 100px 100px 0 100px">
-            <h1 style="text-align: left;">游戏 1：游戏介绍</h1>
+            <h1 style="text-align: left;">游戏 1 介绍</h1>
             <div style="display:flex;align-items:center">
                 <div style="flex:4">
-                    <p>在两个游戏中，<span style="font-weight: bold;color: rgb(142,27,17);">每100积分等同于1元的额外报酬</span>。我们将在实验结束后，根据实际的得分情况，向你<span style="font-weight: bold;color: rgb(142,27,17);">另行追付</span>。预计10个工作日左右到账，请你关注后续通知。
-                    <br>
                     本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 起始积分，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 1 中的总积分为 ${gameState.numRounds} 局游戏的累积积分。<b>每局游戏具体规则如下：</b></p>
 
                     <p>
-                        (1) 每局开始时，系统从两个箱子中随机挑选⼀个，按右图规律从箱中抽球展示 (后续页面也会展示该规律)。
+                        (1) <b>每局开始前</b>，系统从 <b>偏黑箱</b> 和 <b>偏白箱</b> 两个箱子中随机挑选⼀个，后续将从中随机抽出球<b>展示后放回</b>，偏黑/白箱抽出球的概率如右图所示(后续页面也会展示该图片)。被挑中的箱子<b>在本局游戏中保持不变</b>。
                     </p>
                     <p>
-                        (2) 每局最多进行 <b>${gameState.maxAttempts}</b> 轮。每轮中，你会看到当前和之前轮次中抽出展示的所有球，并在三个选项中择一选择：<b>A</b>. 这是偏白箱；<b>B</b>. 这是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
+                        (2) 每局最多抽出展示 <b>${gameState.maxAttempts}</b> 轮小球。每轮中，你会看到当前和之前轮次中抽出展示的所有球，并在三个选项中择一选择：<b>A</b>. 开局挑选的是偏白箱；<b>B</b>. 开局挑选的是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
                     </p> 
                     <p>
-                        (3) 一旦你在某一轮次中<b>做出判断</b>——选择 A 或 B，则本局游戏<b>立刻结束</b>；若选择 C，则进入下一轮。第 ${gameState.maxAttempts} 轮时必须做判断，在 A 和 B 之间择一选择。
+                        (3) 一旦你在某一轮次中<b>做出判断</b>——选择 A 或 B，则<b>本局游戏立刻结束</b>；若选择 C，则进入下一轮，继续抽出展示小球。第 ${gameState.maxAttempts} 轮时必须做判断，在 A 和 B 之间择一选择。
                     </p>
                     <p> 
                         (4) 每局结束后，如果<span style="font-weight: bold;color: rgb(142,27,17);">判断正确</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">加 50 分</span>；如果<span style="font-weight: bold;color: rgb(142,27,17);">判断错误</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">减 50 分</span>。你的<b>收益只取决于判断是否正确</b>，而与做出判断的<b>轮次无关</b>。
@@ -139,8 +138,8 @@ function createDecisionTrial() {
             `,
             options: () => {
                 const isFinal = gameState.currentAttempt === 8;
-                return isFinal ? ['A. 这是偏白箱', 'B. 这是偏黑箱'] 
-                               : ['A. 这是偏白箱', 'B. 这是偏黑箱', 'C. 暂不判断，进入下一轮'];
+                return isFinal ? ['A. 开局挑选的是偏白箱', 'B. 开局挑选的是偏黑箱'] 
+                               : ['A. 开局挑选的是偏白箱', 'B. 开局挑选的是偏黑箱', 'C. 暂不判断，进入下一轮'];
             },
             required: false
         }],
@@ -180,7 +179,7 @@ const resultPage = {
         const lastTrialData = jsPsych.data.get().last(1).values()[0];
         const guess = lastTrialData.response.Q0.includes('偏白箱') ? '偏白箱' : '偏黑箱';
         const correct = guess === gameState.boxType;
-        const resultText = `你的判断是：“这是${guess}”，判断<b>“${correct ? '正确' : '错误'}”</b>，<span style="font-weight: bold;color: rgb(142,27,17);">${correct ? '+50' : '-50'} 分</span>`;
+        const resultText = `你的判断是：“开局挑选的是${guess}”，判断<b>“${correct ? '正确' : '错误'}”</b>，<span style="font-weight: bold;color: rgb(142,27,17);">${correct ? '+50' : '-50'} 分</span>`;
         return `
             <h2>${gameState.currentRound === gameState.numRounds ? '游戏1结束' : `第 ${gameState.currentRound} 局`}</h2>
             <p>${resultText}</p>

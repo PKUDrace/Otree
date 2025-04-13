@@ -98,18 +98,19 @@ const intro_game2 = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="text-align: left; margin: 50px 150px;">
-            <h1 style="text-align: left;">游戏 2：游戏介绍</h1>
+            <h1 style="text-align: left;">游戏 2 介绍</h1>
             <div style="display: flex; gap: 40px; align-items: flex-start;">
                 <div style="flex: 1;">
-                    <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 起始积分，游戏共进行 <strong>${game2State.numRounds}</strong> 局，你在游戏 2 中的收益为${game2State.numRounds}局游戏的累积收益，并按照 <span style="font-weight: bold; color: rgb(142,27,17);">100积分 = 1元</span> 的方式折合为你的额外报酬。</p>
-                    <p>箱子的选取方法，抽球规律和作答规则与游戏 1 相同。每局游戏开始前，将随机从两个箱子中<span style="font-weight: bold;color: rgb(142,27,17);">抽取一个供你和对手抢答判断，每一轮展示给你们的球是一样的。</span>在整个游戏过程中你们<span style="font-weight: bold;color: rgb(142,27,17);">看不到彼此的选择</span>。</p>
-                    <p>${game2State.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下规则计算各自<b>每局的收益</b>：</p>
+                    <p>本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 起始积分，游戏共进行 <strong>${game2State.numRounds}</strong> 局，你在游戏 2 中的收益为${game2State.numRounds}局游戏的累积收益，并将同样按照<span style="font-weight: bold; color: rgb(142,27,17);"> 100积分 = 1元 折合为额外报酬。</span></p>
+                    <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。箱子的选取方法，抽球规律和作答规则与游戏 1 相同。</p>
+                    <p>每局游戏开始前，系统随机从两个箱子中挑选一个，后续每轮从中随机抽出球，展示给你和你的对手后放回。<span style="font-weight: bold;color: rgb(142,27,17);">对你们来说，开局随机挑选的箱子和每一轮展示的球是一样的。</span>你们将根据看到的信息，各自判断开局挑选的是哪个箱子。在游戏 2 的整个过程中，你们<span style="font-weight: bold;color: rgb(142,27,17);">看不到彼此的选择</span>。</p>
+                    <p>${game2State.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下<span style="font-weight: bold;color: rgb(142,27,17);">抢答规则</span>计算各自<b>每局的收益</b>：</p>
                     <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
                         <li>情况 1：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在同一轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">彼此收益互不影响</span>，判断正确者加 50 分，判断错误者减 50 分。</li>
                         <li>情况 2：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在不同轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">作答轮次晚的一方，作答无效，得 0 分</span>；轮次早的一方，判断正确加 50 分，判断错误减 50 分。</li>
                     </div>
                 </div>
-                <div style="flex: 0 0 auto; margin-top: 100px;">
+                <div style="flex: 0 0 auto; margin-top: 150px;">
                 <img src="img/concept3.png" height="350px" style="display: block;" />
                 </div>
             </div>
@@ -122,42 +123,43 @@ const calculationPage = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <div style="text-align: left; margin: 50px 150px;">
-            <h1 style="text-align: left;">计算题</h1>
-            <p><b>请基于游戏 2 的收益计算规则，完成下面两道计算题。</b></p>
+            <h1 style="text-align: left;">测试题</h1>
+            <p><b>为确保你正确理解了游戏 2 的规则，请完成以下测试题。</b></p>
             
             <!-- 题目 1 -->
             <div>
-                <p>在游戏 2 的某一局中，玩家 1 和玩家 2 都在<b>第 9 轮</b>作答，都选择了<b>“A. 这是偏白箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏白箱</b>
-                ，请选择两位玩家在该局游戏中的收益。<br>
+                <p>在游戏2的某一局中，玩家 1 和玩家 2 都在<b>第 9 轮</b>作答，都选择了<b>“A. 开局挑选的是偏白箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏白箱</b>，请选择两位玩家在该局游戏中的收益。</p>
 
-                1.请选择玩家 1 在该局游戏中的收益。</p>
+                1. 请选择玩家 1 在该局游戏中的收益。
                 <div style="display: flex; gap: 10px; margin-top: 5px;"> <!-- 增加 margin-top -->
                     <label><input type="radio" name="test_answer1" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer1" value="0"> 0</label><br>
                     <label><input type="radio" name="test_answer1" value="1"> +50</label><br>
                 </div>
             </div>
-
+            <br>
             <div>
-                <p>2.请选择玩家 2 在该局游戏中的收益。</p>
+                2. 请选择玩家 2 在该局游戏中的收益。
                 <div style="display: flex; gap: 10px; margin-top: 5px;"> <!-- 增加 margin-top -->
                     <label><input type="radio" name="test_answer2" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer2" value="0"> 0</label><br>
                     <label><input type="radio" name="test_answer2" value="1"> +50</label><br>
                 </div>
             </div>
+            <br>
             <!-- 题目 3 -->
             <div>
-                <p>在游戏 2 的某一局中，玩家 1 在<b>第 1 轮</b>作答，选择了<b>“A. 这是偏白箱”</b>，玩家 2 在<b>第 9 轮</b>作答，选择了<b>“B. 这是偏黑箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏黑箱</b>，请选择两位玩家在该局游戏中的收益。
-                </p>3.请选择玩家 1 在该局游戏的收益：</p>
+                <p>在游戏2的某一局中，玩家 1 在<b>第 1 轮</b>作答，选择了<b>“A. 开局挑选的是偏白箱”</b>，玩家 2 在<b>第 9 轮</b>作答，选择了<b>“B. 开局挑选的是偏黑箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏黑箱</b>，请选择两位玩家在该局游戏中的收益。</p>
+                3. 请选择玩家 1 在该局游戏的收益：
                 <div style="display: flex; gap: 10px;margin-top: 5px;">
                     <label><input type="radio" name="test_answer3" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer3" value="0"> 0</label><br>
                     <label><input type="radio" name="test_answer3" value="1"> +50</label><br>
                 </div>
             </div>
+            <br>
             <div>
-                <p>4. 请选择玩家 2 在该局游戏的收益：</p>
+                4. 请选择玩家 2 在该局游戏的收益：
                 <div style="display: flex; gap: 10px;margin-top: 5px;">
                     <label><input type="radio" name="test_answer4" value="-1"> -50</label><br>
                     <label><input type="radio" name="test_answer4" value="0"> 0</label><br>
@@ -190,6 +192,7 @@ const calculationPage = {
         });
     }
 };
+
 //反馈页
 const feedbackPage = {
     type: jsPsychHtmlKeyboardResponse,
@@ -311,8 +314,8 @@ function createDecisionTrial() {
             `,
             options: () => {
                 const isFinal = game2State.currentAttempt === 8;
-                return isFinal ? ['A. 这是偏白箱', 'B. 这是偏黑箱']
-                    : ['A. 这是偏白箱', 'B. 这是偏黑箱', 'C. 暂不判断，进入下一轮'];
+                return isFinal ? ['A. 开局挑选的是偏白箱', 'B. 开局挑选的是偏黑箱']
+                    : ['A. 开局挑选的是偏白箱', 'B. 开局挑选的是偏黑箱', 'C. 暂不判断，进入下一轮'];
             },
             required: false
         }],
@@ -353,20 +356,20 @@ const resultPage_game2 = {
             <h2>${title}</h2>
             <br>
             <p>第 ${game2State.currentRound} 局游戏结果：</p>
-            <p>你在第 ${game2State.guess_attempt + 1} 轮做出判断: ${game2State.current_guess}。
+            <p>你在第 ${game2State.guess_attempt + 1} 轮做出判断: 开局挑选的是${game2State.current_guess}。
                 与你匹配的玩家也在某一轮次做出判断。
             </p>
         `;
 
         if (game2State.currentRound < game2State.numRounds) {
             content += `
-                <p>游戏 2 结束后，系统将比对双方的选择计算你们在游戏 2 中的收益，之后追付额外报酬。</p>
+                <p>游戏 2 的10局结束后，系统将比对双方的选择，分别计算你们在游戏 2 中的收益，之后追付额外报酬。</p>
                 <br>
             `;
             resultBtn = "下一局"
         } else {
             content += `
-                <p>你在游戏 2 中的收益将在实验结束，系统比对后追付。</p>
+                <p>游戏 2 中的收益将在系统比对你和对手的选择，分别计算收益后追付。</p>
                 <br>
             `;
             resultBtn = "实验结束"
