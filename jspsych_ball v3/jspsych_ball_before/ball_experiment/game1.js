@@ -58,7 +58,9 @@ const intro2 = {
             <h1 style="text-align: left;">游戏 1：游戏介绍</h1>
             <div style="display:flex;align-items:center">
                 <div style="flex:4">
-                    <p>在两个游戏中，<span style="font-weight: bold;color: rgb(142,27,17);">每100积分等同于1元的额外报酬</span>，我们将在实验结束后根据实际表现向您另行追付。本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 起始积分，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 1 中的总积分为${gameState.numRounds}局游戏的累积积分。<b>每局游戏具体规则如下：</b></p>
+                    <p>在两个游戏中，<span style="font-weight: bold;color: rgb(142,27,17);">每100积分等同于1元的额外报酬</span>。我们将在实验结束后，根据实际的得分情况，向你<span style="font-weight: bold;color: rgb(142,27,17);">另行追付</span>。预计10个工作日左右到账，请你关注后续通知。
+                    <br>
+                    本游戏你拥有 <strong>${gameState.totalEarnings}</strong> 起始积分，游戏共进行 <strong>${gameState.numRounds}</strong> 局，你在游戏 1 中的总积分为 ${gameState.numRounds} 局游戏的累积积分。<b>每局游戏具体规则如下：</b></p>
 
                     <p>
                         (1) 每局开始时，系统从两个箱子中随机挑选⼀个，按右图规律从箱中抽球展示 (后续页面也会展示该规律)。
@@ -67,10 +69,10 @@ const intro2 = {
                         (2) 每局最多进行 <b>${gameState.maxAttempts}</b> 轮。每轮中，你会看到当前和之前轮次中抽出展示的所有球，并在三个选项中择一选择：<b>A</b>. 这是偏白箱；<b>B</b>. 这是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
                     </p> 
                     <p>
-                        (3) 一旦你在某一轮次中<b>做出判断</b>——选择 A 或 B，则本局游戏<b>立刻结束</b>；若选择 C，则进入下一轮。第 ${gameState.maxAttempts}轮时必须做判断，在 A 和 B 之间择一选择。
+                        (3) 一旦你在某一轮次中<b>做出判断</b>——选择 A 或 B，则本局游戏<b>立刻结束</b>；若选择 C，则进入下一轮。第 ${gameState.maxAttempts} 轮时必须做判断，在 A 和 B 之间择一选择。
                     </p>
                     <p> 
-                        (4) 每局结束后，如果<span style="font-weight: bold;color: rgb(142,27,17);">判断正确</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">获得 50 积分</span>；如果<span style="font-weight: bold;color: rgb(142,27,17);">判断错误</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">失去 50 积分</span>。你的<b>收益只取决于判断是否正确</b>，而与做出判断的<b>轮次无关</b>。
+                        (4) 每局结束后，如果<span style="font-weight: bold;color: rgb(142,27,17);">判断正确</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">加 50 分</span>；如果<span style="font-weight: bold;color: rgb(142,27,17);">判断错误</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">减 50 分</span>。你的<b>收益只取决于判断是否正确</b>，而与做出判断的<b>轮次无关</b>。
                     </p> 
                 </div>
                 <!-- img -->
@@ -177,11 +179,11 @@ const resultPage = {
         const lastTrialData = jsPsych.data.get().last(1).values()[0];
         const guess = lastTrialData.response.Q0.includes('偏白箱') ? '偏白箱' : '偏黑箱';
         const correct = guess === gameState.boxType;
-        const resultText = `你的判断是：“这是${guess}”，判断结果：<b>“${correct ? '正确' : '错误'}”</b>，积分${correct ? '+50' : '-50'}`;
+        const resultText = `你的判断是：“这是${guess}”，判断<b>“${correct ? '正确' : '错误'}”</b>，<span style="font-weight: bold;color: rgb(142,27,17);">${correct ? '+50' : '-50'} 分</span>`;
         return `
-            <h2>${gameState.currentRound === 5 ? '游戏结束' : '下一局'}</h2>
+            <h2>${gameState.currentRound === gameState.numRounds ? '游戏1结束' : `第 ${gameState.currentRound} 局`}</h2>
             <p>${resultText}</p>
-            <p><b>总积分：${gameState.totalEarnings}</b></p>
+            <p><span style="font-weight: bold;color: rgb(142,27,17);">总积分：${gameState.totalEarnings}</span></p>
         `;
     },
     choices: () => {

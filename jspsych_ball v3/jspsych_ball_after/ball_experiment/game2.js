@@ -52,7 +52,6 @@ const intro_game2 = {
     stimulus: `
         <div style="text-align: left; margin: 50px 150px;">
             <h1 style="text-align: left;">游戏 2：游戏介绍</h1>
-            <br>
             <div style="display: flex; gap: 40px; align-items: flex-start;">
                 <div style="flex: 1;">
                     <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 起始积分，游戏共进行 <strong>${game2State.numRounds}</strong> 局，你在游戏 2 中的收益为${game2State.numRounds}局游戏的累积收益，并按照 <span style="font-weight: bold; color: rgb(142,27,17);">100积分 = 1元</span> 的方式折合为你的额外报酬。</p>
@@ -60,11 +59,11 @@ const intro_game2 = {
                     <p>${game2State.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下规则计算各自<b>每局的收益</b>：</p>
                     <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
                         <li>情况 1：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在同一轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">彼此收益互不影响</span>，判断正确者加 50 分，判断错误者减 50 分。</li>
-                        <li>情况 2：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在不同轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">作答轮次晚的一方，作答无效，得 0 分</span>；轮次早的一方，判断正确加 50 分，判断错误加 50 分。</li>
+                        <li>情况 2：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在不同轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">作答轮次晚的一方，作答无效，得 0 分</span>；轮次早的一方，判断正确加 50 分，判断错误减 50 分。</li>
                     </div>
                 </div>
-                <div style="flex: 0 0 auto;">
-                    <img src="img/concept3.png" height="350px" style="display: block;" />
+                <div style="flex: 0 0 auto; margin-top: 100px;">
+                <img src="img/concept3.png" height="350px" style="display: block;" />
                 </div>
             </div>
         </div>
@@ -170,7 +169,7 @@ const feedbackPage = {
                 若回答不正确，请再次阅读游戏2的<b>每局收益</b>的计算规则，完全理解后点击重新测试，再次尝试作答：
                 <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;text-align: left;max-width: 1150px; margin: 0 auto;">
                     <li>情况 1：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在同一轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">彼此收益互不影响</span>，判断正确者加 50 分，判断错误者减 50 分。</li>
-                        <li>情况 2：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在不同轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">作答轮次晚的一方，作答无效，得 0 分</span>；轮次早的一方，判断正确加 50 分，判断错误加 50 分。</li>
+                        <li>情况 2：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在不同轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">作答轮次晚的一方，作答无效，得 0 分</span>；轮次早的一方，判断正确加 50 分，判断错误减 50 分。</li>
                 </div>
                 <br>
                 <button id="feedback-button" data-correct="${allCorrect}" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px; background-color: rgb(75, 126, 243); color: white; border: none; border-radius: 5px; cursor: pointer;">${buttonText}</button>
@@ -337,8 +336,7 @@ const resultPage_game2 = {
 let game2_end = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-      <h3 style="margin-bottom:30px">游戏2️⃣已全部完成</h3>
-      <h3 style="margin-bottom:30px">系统将比对双方的选择计算收益，之后向您追付额外报酬，请留意后续通知。</h3></br>
+    <h3 style="margin-bottom:30px">游戏2️⃣已全部完成</h3>
       `,
     choices: ['继续']
 };

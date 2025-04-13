@@ -90,20 +90,20 @@ const end = {
     preamble: '<h1 style="font-size: 24px; margin-bottom: 20px; text-align: left;">实验结果</h1>',
     html: ()=>`
             <div style="text-align: left; background-color: white; padding: 0 20px; border-radius: 5px;">
-                <p style="margin-bottom: 15px; line-height: 1.5;">您在游戏1的报酬为${gameState.totalEarnings}元，游戏2的报酬将与另一位玩家的数据比对后追付差额。</p>
+                <p style="margin-bottom: 15px; line-height: 1.5;">您在游戏1获得的<b>额外报酬为${(gameState.totalEarnings / 100).toFixed(1).replace(/\.0$/, '')}元</b>，游戏2的报酬将与另一位玩家的数据比对后追付差额。</p>
                 <p style="margin-bottom: 15px; line-height: 1.5;">请您留意后续通知</p>
                 
                 <div style="margin: 20px 0;">
-                    <p style="margin-bottom: 15px; line-height: 1.5;">本次实验报酬的转账方式，你选择哪一个？</p>
+                    <p style="margin-bottom: 15px; line-height: 1.5;">本次实验额外报酬的追付方式，你选择哪一个？</p>
                     
                     <div style="display: flex; align-items: center; margin: 10px 0;">
                         <input type="radio" id="option1" name="payment_option" value="currentMonth" style="margin-right: 10px;">
-                        <label for="option1" style="font-weight: normal;">本月获得实验报酬</label>
+                        <label for="option1" style="font-weight: normal;">本月获得额外报酬</label>
                     </div>
                     
                     <div style="display: flex; align-items: center; margin: 10px 0;">
                         <input type="radio" id="option2" name="payment_option" value="nextMonth" style="margin-right: 10px;">
-                        <label for="option2" style="font-weight: normal;">下个月获得实验报酬 + 额外2元</label>
+                        <label for="option2" style="font-weight: normal;">下个月获得实验的额外报酬 + 额外2元</label>
                     </div>
                 </div>
                 
@@ -146,11 +146,11 @@ const end = {
   let timeline = [];
 
   //引入各部分的时间线
-  timeline = timeline.concat(enter_fullscreen);
-  timeline = timeline.concat(intro_timeline);
-  timeline = timeline.concat(survey1_timeline);
-  timeline = timeline.concat(survey2_timeline); 
-  timeline = timeline.concat(survey3_timeline);
+  //timeline = timeline.concat(enter_fullscreen);
+  //timeline = timeline.concat(intro_timeline);
+  //timeline = timeline.concat(survey1_timeline);
+  //timeline = timeline.concat(survey2_timeline); 
+  //timeline = timeline.concat(survey3_timeline);
   timeline = timeline.concat(game1_timeline);
   timeline = timeline.concat(game2_timeline)
 
