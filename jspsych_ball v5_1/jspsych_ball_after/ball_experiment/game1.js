@@ -51,7 +51,6 @@ const intro1 = {
     choices: ["下一页"]
 };
 
-// 介绍页2
 const intro2 = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
@@ -68,10 +67,10 @@ const intro2 = {
                         (2) 每局最多从开局挑选的箱子中抽 <b>${gameState.maxAttempts}</b> 轮球，每轮抽一个球<b>展示给你看后放回</b>。看完球后，你要在三个选项中选一个：<b>A</b>. 开局挑选的是偏白箱；<b>B</b>. 开局挑选的是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
                     </p> 
                     <p>
-                        (3) 一旦你在某一轮<b>做出判断</b>——选择 A 或 B，则<b>本局游戏立刻结束</b>，进入计分；若选择 C，则进入下一轮，继续抽球展示。第 ${gameState.maxAttempts} 轮时必须做判断，在 A 和 B 之间择一选择。
+                        (3) 一旦你在某一轮<b>做出判断</b>——选择 A 或 B，则<b>本局游戏立刻结束</b>，进入收益计算；若选择 C，则进入下一轮，继续抽球展示。第 ${gameState.maxAttempts} 轮时必须做判断，在 A 和 B 之间择一选择。
                     </p>
                     <p> 
-                        (4) <span style="font-weight: bold;color: rgb(142,27,17);">计分规则</span>：每局结束后，如果你对开局挑选的箱子<span style="font-weight: bold;color: rgb(142,27,17);">判断正确</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">加 50 分</span>；如果<span style="font-weight: bold;color: rgb(142,27,17);">判断错误</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">减 50 分</span>。你的<span style="font-weight: bold;color: rgb(142,27,17);">得分只取决于判断的对错，和第几轮做判断无关</span>。
+                        (4) <span style="font-weight: bold;color: rgb(142,27,17);">收益计算规则</span>：每局结束后，如果你对开局挑选的箱子<span style="font-weight: bold;color: rgb(142,27,17);">判断正确</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">加 50 分</span>；如果<span style="font-weight: bold;color: rgb(142,27,17);">判断错误</span>，将<span style="font-weight: bold;color: rgb(142,27,17);">减 50 分</span>。你的<span style="font-weight: bold;color: rgb(142,27,17);">得分只取决于判断的对错，和第几轮做判断无关</span>。
                     </p> 
                 </div>
                 <!-- img -->

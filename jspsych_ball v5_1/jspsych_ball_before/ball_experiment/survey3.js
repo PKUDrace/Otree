@@ -65,7 +65,9 @@ const survey3HTML = `
             </div>
         </div>
         <br>
-
+        <!-- 添加分割线 -->
+        <hr style="border: 2px double #ccc; margin: 20px 0;">
+        <br>
         <div class="radio-option">
             <label>5. 以下两个选项中你更偏好哪一项？</label>
             <div class="option-group">

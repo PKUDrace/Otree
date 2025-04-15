@@ -157,7 +157,7 @@ const survey1HTML = `
 
         <div id="social_fields" style="display:none;">
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem;">9. 请选择你的最高学历</label>
+                <label style="display: block; margin-bottom: 0.5rem;">5. 请选择你的最高学历</label>
                 <select name="education_level" required class="form-control">
                     <option value="">请选择</option>
                     <option value="primary_school">小学及以下</option>

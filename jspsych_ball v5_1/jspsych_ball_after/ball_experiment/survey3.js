@@ -64,6 +64,10 @@ const survey3HTML = `
                 </label>
             </div>
         </div>
+        
+        <br>
+        <!-- 添加分割线 -->
+        <hr style="border: 2px solid #ccc; margin: 20px 0;"> 
         <br>
 
         <div class="radio-option">

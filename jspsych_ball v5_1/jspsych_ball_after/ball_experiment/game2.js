@@ -92,8 +92,7 @@ const initgame2State = {
         console.log(game2State);
     }
 };
-
-// 介绍页
+//介绍页
 const intro_game2 = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
@@ -101,15 +100,15 @@ const intro_game2 = {
             <h1 style="text-align: left;">游戏 2 介绍</h1>
             <div style="display: flex; gap: 40px; align-items: flex-start;">
                 <div style="flex: 1;">
-                    <p>本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 起始积分，共进行 <strong>${game2State.numRounds}</strong> 局，每局积分累计到总分，最终将按照<span style="font-weight: bold; color: rgb(142,27,17);"> 100积分 = 1元 折合为额外报酬。</span></p>
+                    <p>本游戏你拥有 <strong>${game2State.totalEarnings}</strong> 起始积分，共进行 <strong>${game2State.numRounds}</strong> 局。每局积分累计到总分，最终同样按照<span style="font-weight: bold; color: rgb(142,27,17);"> 100积分 = 1元 </span>折合为额外报酬。</p>
                     <p>你将与一位随机匹配的玩家参与<strong>抢答版</strong>的游戏 1。箱子的选取方法，抽球规律和作答规则与游戏 1 相同。</p>
                     <p>每局游戏开始前，系统随机从两个箱子中挑选一个，后续每轮从中抽出球<b>展示给你和你的对手看后放回</b>。你们将根据看到的信息，各自判断开局挑选的是哪个箱子。在游戏 2 的整个过程中，你们<b>看不到彼此的选择</b>。</p>
-                    <p>${game2State.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下<span style="font-weight: bold;color: rgb(142,27,17);">抢答规则</span>计算各自<b>每局的收益</b>：</p>
+                    <p>${game2State.numRounds}局游戏结束后，系统将比对双方每局的选择，按以下<span style="font-weight: bold;color: rgb(142,27,17);">抢答的规则</span>计算各自<b>每局的收益</b>：</p>
                     <div style="background-color: #e0f0fa; padding: 5px; border-radius: 5px;">
                         <li>情况 1：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在同一轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">彼此收益互不影响</span>，判断正确者加 50 分，判断错误者减 50 分。</li>
                         <li>情况 2：两位玩家<span style="font-weight: bold;color: rgb(142,27,17);">在不同轮次</span>做出判断，<span style="font-weight: bold;color: rgb(142,27,17);">作答轮次晚的一方，作答无效，得 0 分</span>；轮次早的一方，判断正确加 50 分，判断错误减 50 分。</li>
                     </div>
-                    <p>注意：计分<span style="font-weight: bold;color: rgb(142,27,17);">只跟第几轮做判断和判断的对错有关，而与实际的作答时间无关！</span></p>
+                    <p>注意：收益只跟你和对手<span style="font-weight: bold;color: rgb(142,27,17);">第几轮做判断以及判断的对错有关</span>，而与<span style="font-weight: bold;color: rgb(142,27,17);">现实中作答时间的早晚快慢无关！</span></p>
                 </div>
                 <div style="flex: 0 0 auto; margin-top: 150px;">
                 <img src="img/concept3.png" height="350px" style="display: block;" />
