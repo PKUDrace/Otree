@@ -128,7 +128,7 @@ const calculationPage = {
             
             <!-- 题目 1 -->
             <div>
-                <p>在游戏2的某一局中，玩家 1 和玩家 2 都在<b>第 9 轮</b>作答，都选择了<b>“A. 开局挑选的是偏白箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏白箱</b>，请选择两位玩家在该局游戏中的收益。</p>
+                <p>在游戏2的某一局中，玩家 1 和玩家 2 都在<b>第 9 轮</b>作答，都选择了<b>“A. 本局挑选的是偏白箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏白箱</b>，请选择两位玩家在该局游戏中的收益。</p>
 
                 1. 请选择玩家 1 在该局游戏中的收益。
                 <div style="display: flex; gap: 10px; margin-top: 5px;"> <!-- 增加 margin-top -->
@@ -149,7 +149,7 @@ const calculationPage = {
             <br>
             <!-- 题目 3 -->
             <div>
-                <p>在游戏2的某一局中，玩家 1 在<b>第 1 轮</b>作答，选择了<b>“A. 开局挑选的是偏白箱”</b>，玩家 2 在<b>第 9 轮</b>作答，选择了<b>“B. 开局挑选的是偏黑箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏黑箱</b>，请选择两位玩家在该局游戏中的收益。</p>
+                <p>在游戏2的某一局中，玩家 1 在<b>第 1 轮</b>作答，选择了<b>“A. 本局挑选的是偏白箱”</b>，玩家 2 在<b>第 9 轮</b>作答，选择了<b>“B. 本局挑选的是偏黑箱”</b>。如果在这局游戏开始时，被挑中的箱子是<b>偏黑箱</b>，请选择两位玩家在该局游戏中的收益。</p>
                 3. 请选择玩家 1 在该局游戏的收益：
                 <div style="display: flex; gap: 10px;margin-top: 5px;">
                     <label><input type="radio" name="test_answer3" value="-1"> -50</label><br>
@@ -312,8 +312,8 @@ function createDecisionTrial() {
             `,
             options: () => {
                 const isFinal = game2State.currentAttempt === 8;
-                return isFinal ? ['A. 开局挑选的是偏白箱', 'B. 开局挑选的是偏黑箱']
-                    : ['A. 开局挑选的是偏白箱', 'B. 开局挑选的是偏黑箱', 'C. 暂不判断，进入下一轮'];
+                return isFinal ? ['A. 本局挑选的是偏白箱', 'B. 本局挑选的是偏黑箱']
+                    : ['A. 本局挑选的是偏白箱', 'B. 本局挑选的是偏黑箱', 'C. 暂不判断，进入下一轮'];
             },
             required: false
         }],
@@ -354,7 +354,7 @@ const resultPage_game2 = {
             <h2>${title}</h2>
             <br>
             <p>第 ${game2State.currentRound} 局游戏结果：</p>
-            <p>你在第 ${game2State.guess_attempt + 1} 轮做出判断: 开局挑选的是${game2State.current_guess}。
+            <p>你在第 ${game2State.guess_attempt + 1} 轮做出判断: 本局挑选的是${game2State.current_guess}。
                 与你匹配的玩家也在某一轮次做出判断。
             </p>
         `;

@@ -3,7 +3,7 @@ let intro_text = `
     <div class="centered-list">
         <ul>
             <li>欢迎参加本实验！</li>
-            <li>本实验由三个问卷和<span style="font-weight: bold;color: rgb(142,27,17);">两个决策游戏</span>组成。你将获得<span style="font-weight: bold;color: rgb(142,27,17);"> 15 元基础报酬</span>，并根据在<span style="font-weight: bold;color: rgb(142,27,17);">两个游戏</span>中的实际表现，获得<span style="font-weight: bold;color: rgb(142,27,17);">至多 17 元的额外报酬</span>。</li>
+            <li>本实验由三个问卷和<span style="font-weight: bold;color: rgb(142,27,17);">两个决策游戏</span>组成。你将获得<span style="font-weight: bold;color: rgb(142,27,17);"> 5 元基础报酬</span>，并根据在<span style="font-weight: bold;color: rgb(142,27,17);">两个游戏</span>中的实际表现，获得<span style="font-weight: bold;color: rgb(142,27,17);">至多 17 元的额外报酬</span>。</li>
             <li>请务必使用 <span style="font-weight: bold;color: rgb(142,27,17);">电脑</span> 参与实验！若现在使用了其他设备，请退出，改用电脑重新登录本实验。</li>
             <li>参与实验是<span style="font-weight: bold;color: rgb(142,27,17);"> 完全自愿 </span>的，你可以在任何时候选择退出实验，但如果退出实验你将不会获得任何报酬。</li>
             <li>本实验中您的身份和回答将<span style="font-weight: bold;color: rgb(142,27,17);"> 完全匿名 </span>，并且这些记录不会包含您的姓名或任何其他可用于识别您身份的个人信息。只有参与这项研究的研究人员能访问您的回答。</li>

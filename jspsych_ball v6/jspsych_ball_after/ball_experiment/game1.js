@@ -64,7 +64,7 @@ const intro2 = {
                         (1) <b>每局开始前</b>，系统从如右图所示的 <b>偏黑箱</b> 和 <b>偏白箱</b> 两个箱子中随机挑选⼀个。<b>你不知道挑选的是哪个</b>，需要根据后续的信息来进行判断。
                     </p>
                     <p>
-                        (2) 每局最多从开局挑选的箱子中抽 <b>${gameState.maxAttempts}</b> 轮球，每轮抽一个球<b>展示给你看后放回</b>。看完球后，你要在三个选项中选一个：<b>A</b>. 开局挑选的是偏白箱；<b>B</b>. 开局挑选的是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
+                        (2) 每局最多从开局挑选的箱子中抽 <b>${gameState.maxAttempts}</b> 轮球，每轮抽一个球<b>展示给你看后放回</b>。看完球后，你要在三个选项中选一个：<b>A</b>. 本局挑选的是偏白箱；<b>B</b>. 本局挑选的是偏黑箱；<b>C</b>. 暂不判断，进入下一轮。
                     </p> 
                     <p>
                         (3) 一旦你在某一轮<b>做出判断</b>——选择 A 或 B，则<b>本局游戏立刻结束</b>，进入收益计算；若选择 C，则进入下一轮，继续抽球展示。第 ${gameState.maxAttempts} 轮时必须做判断，在 A 和 B 之间择一选择。
@@ -137,8 +137,8 @@ function createDecisionTrial() {
             `,
             options: () => {
                 const isFinal = gameState.currentAttempt === 8;
-                return isFinal ? ['A. 开局挑选的是偏白箱', 'B. 开局挑选的是偏黑箱'] 
-                               : ['A. 开局挑选的是偏白箱', 'B. 开局挑选的是偏黑箱', 'C. 暂不判断，进入下一轮'];
+                return isFinal ? ['A. 本局挑选的是偏白箱', 'B. 本局挑选的是偏黑箱'] 
+                               : ['A. 本局挑选的是偏白箱', 'B. 本局挑选的是偏黑箱', 'C. 暂不判断，进入下一轮'];
             },
             required: false
         }],
@@ -177,7 +177,7 @@ const resultPage = {
         const lastTrialData = jsPsych.data.get().last(1).values()[0];
         const guess = lastTrialData.response.Q0.includes('偏白箱') ? '偏白箱' : '偏黑箱';
         const correct = guess === gameState.boxType;
-        const resultText = `你的判断是：“开局挑选的是${guess}”，判断<b>“${correct ? '正确' : '错误'}”</b>，<span style="font-weight: bold;color: rgb(142,27,17);">${correct ? '+50' : '-50'} 分</span>`;
+        const resultText = `你的判断是：“本局挑选的是${guess}”，判断<b>“${correct ? '正确' : '错误'}”</b>，<span style="font-weight: bold;color: rgb(142,27,17);">${correct ? '+50' : '-50'} 分</span>`;
         return `
             <h2>${gameState.currentRound === gameState.numRounds ? '游戏1结束' : `第 ${gameState.currentRound} 局`}</h2>
             <p>${resultText}</p>
