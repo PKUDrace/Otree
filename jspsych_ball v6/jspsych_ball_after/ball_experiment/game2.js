@@ -247,9 +247,7 @@ const feedbackPage = {
                 jsPsych.finishTrial();
             } else {
                 // 答案错误：清除数据并重新插入计算页和反馈页
-                const allData = Array.from(jsPsych.data.get().filter(data => data.trial_type !== 'calculation'));
-                jsPsych.data.reset();
-                allData.forEach(d => jsPsych.data.add(d));
+                // 删除这三行，以de掉数据存储bug
 
                 // 关键修复：插入新的计算页和反馈页，覆盖后续流程
                 jsPsych.addNodeToEndOfTimeline({
