@@ -12,7 +12,7 @@ const gameState = {
 };
 
 // 生成硬币序列函数
-function generateCoinSequence(boxType) {
+function generateCoinSequence1(boxType) {
     const probabilities = boxType === '偏白箱' ? 
         [0.6, 0.4, 0] : [0.4, 0.6, 0]; // 白球概率 60% 或 40%
     
@@ -28,7 +28,7 @@ const initGameState = {
     type: jsPsychCallFunction,
     func: () => {
         gameState.boxType = Math.random() < 0.5 ? '偏白箱' : '偏黑箱';
-        gameState.coinSequence = generateCoinSequence(gameState.boxType);
+        gameState.coinSequence = generateCoinSequence1(gameState.boxType);
         gameState.currentAttempt = 0; // 重置当前轮次
         console.log(gameState);
     }
@@ -86,7 +86,7 @@ const intro2 = {
 };
 
 // 生成表格头部
-function generateTableHeader() {
+function generateTableHeader1() {
     return `
         <thead>
             <tr>
@@ -109,7 +109,7 @@ function generateTableHeader() {
 }
 
 // 生成硬币行（修正符号映射）
-function generateCoinRow(coins) {
+function generateCoinRow1(coins) {
     return `
         <tr>
             <td>结果</td>
@@ -120,7 +120,7 @@ function generateCoinRow(coins) {
 }
 
 // 决策页模板
-function createDecisionTrial() {
+function createDecisionTrial1() {
     return {
         type: jsPsychSurveyMultiChoice,
         questions: [{
@@ -128,8 +128,8 @@ function createDecisionTrial() {
                 <div style="position: relative;">
                     <p style="font-size:25px">第 ${gameState.currentRound} 局，第 ${gameState.currentAttempt + 1} 轮</p>
                     <table class="game-table">
-                        ${generateTableHeader()}
-                        ${generateCoinRow(gameState.coinSequence.slice(0, gameState.currentAttempt + 1))}
+                        ${generateTableHeader1()}
+                        ${generateCoinRow1(gameState.coinSequence.slice(0, gameState.currentAttempt + 1))}
                     </table>
                     <p>请选择一个选项，然后点击确认</p>
                     <img src="img/concept2.png" style="position: absolute; bottom: -275px; right: 0px; width: 245px; height: auto;">
@@ -198,7 +198,7 @@ const roundTimeline = {
     timeline: [
         initGameState,
         {
-            timeline: [createDecisionTrial()],
+            timeline: [createDecisionTrial1()],
             loop_function: () => gameState.currentAttempt < 9 // 最多循环9次
         },
         resultPage
