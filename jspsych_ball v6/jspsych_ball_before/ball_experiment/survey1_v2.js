@@ -197,6 +197,7 @@ const survey1HTML = `
                 <label style="display: block; margin-bottom: 0.5rem;">7. 你认为你在行业中的层级为</label>
                 <select name="work_level" required class="form-control">
                     <option value="">请选择</option>
+                    <option value="no_work">待业</option>
                     <option value="normal_level">普通职员</option>
                     <option value="mid_level">中层</option>
                     <option value="high_level">高层</option>
