@@ -15,7 +15,7 @@ const survey3HTML = `
                 </label><br>
                 <label>
                     <input type="radio" name="choice1" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>1664亿美元，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>1663亿美元，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -30,7 +30,7 @@ const survey3HTML = `
                 </label><br>
                 <label>
                     <input type="radio" name="choice2" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>1664亿美元，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>1663亿美元，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -45,7 +45,7 @@ const survey3HTML = `
                 </label><br>
                 <label>
                     <input type="radio" name="choice3" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>1664亿美元，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>1663亿美元，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -60,7 +60,7 @@ const survey3HTML = `
                 </label><br>
                 <label>
                     <input type="radio" name="choice4" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>1664亿美元，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">低于</span>1663亿美元，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -77,7 +77,7 @@ const survey3HTML = `
                 </label><br>
                 <label>
                     <input type="radio" name="choice5" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>1664亿美元，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>1663亿美元，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -92,7 +92,7 @@ const survey3HTML = `
                 </label><br>
                 <label>
                     <input type="radio" name="choice6" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>1664亿美元，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>1663亿美元，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -107,7 +107,7 @@ const survey3HTML = `
                 </label><br>
                 <label>
                     <input type="radio" name="choice7" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>1664亿美元，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>1663亿美元，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
@@ -122,7 +122,7 @@ const survey3HTML = `
                 </label><br>
                 <label>
                     <input type="radio" name="choice8" value="B">
-                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>1664亿美元，你将获得100元；否则获得0元。</span>
+                    <span style="width:95%">如果三个工作日后收盘时，美国强生与默沙东两家公司的市值差额<span style="font-weight: bold;color: rgb(142,27,17);">高于或等于</span>1663亿美元，你将获得100元；否则获得0元。</span>
                 </label>
             </div>
         </div>
